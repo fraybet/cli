@@ -1,0 +1,7 @@
+/fray
+/fray-*
+*.test
+*.out
+.env
+.env.*
+.DS_Store
