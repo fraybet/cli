@@ -1,28 +1,32 @@
 // Package wallet is agent self-custody: each agent generates and holds its own
-// secp256k1 key (non-custodial — the platform never holds it). It can derive its
-// address and sign EIP-712 digests. Keys are stored as hex keyfiles under a
-// directory; this is dev-grade (unencrypted) for local anvil runs — production
-// would use an encrypted keystore or a remote signer / smart account.
+// key (non-custodial — the platform never holds it). New wallets are HD wallets:
+// a BIP-39 mnemonic (seed phrase) from which keys are derived at the standard
+// Ethereum path m/44'/60'/0'/0/N, so a wallet is recoverable from its phrase.
+// The mnemonic is stored as the keyfile; legacy raw-hex keyfiles still load.
+// This is dev-grade (unencrypted) for local/CLI use — production would use an
+// encrypted keystore or a remote signer / smart account.
 package wallet
 
 import (
-	"encoding/hex"
 	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
-	ethcrypto "github.com/ethereum/go-ethereum/crypto"
+	"github.com/tyler-smith/go-bip32"
+	"github.com/tyler-smith/go-bip39"
 
 	"github.com/fraybet/cli/chain"
 	"github.com/fraybet/cli/core"
 )
 
-// Wallet is an agent's self-custodied key.
+// Wallet is an agent's self-custodied key (derived from an HD seed phrase, or a
+// legacy raw key). Mnemonic is set only for HD wallets.
 type Wallet struct {
-	Name    string
-	Address core.Address
-	privHex string
+	Name     string
+	Address  core.Address
+	Mnemonic string // empty for legacy raw-hex wallets
+	privHex  string
 }
 
 // PrivHex returns the 0x-prefixed private key (handle with care; never log).
@@ -33,13 +37,44 @@ func (w *Wallet) Sign(digest core.Hash32) ([]byte, error) {
 	return chain.SignDigest(w.privHex, digest)
 }
 
-// generate makes a fresh wallet with a name.
-func generate(name string) (*Wallet, error) {
-	key, err := ethcrypto.GenerateKey()
-	if err != nil {
-		return nil, fmt.Errorf("wallet: generate key: %w", err)
+// deriveKey derives the private key (hex) at m/44'/60'/0'/0/index from a mnemonic.
+func deriveKey(mnemonic string, index uint32) (string, error) {
+	if !bip39.IsMnemonicValid(mnemonic) {
+		return "", fmt.Errorf("wallet: invalid mnemonic")
 	}
-	priv := hex.EncodeToString(ethcrypto.FromECDSA(key))
+	seed := bip39.NewSeed(mnemonic, "") // no passphrase
+	master, err := bip32.NewMasterKey(seed)
+	if err != nil {
+		return "", fmt.Errorf("wallet: master key: %w", err)
+	}
+	const h = bip32.FirstHardenedChild // 0x80000000
+	// m / 44' / 60' / 0' / 0 / index
+	path := []uint32{h + 44, h + 60, h + 0, 0, index}
+	k := master
+	for _, p := range path {
+		if k, err = k.NewChildKey(p); err != nil {
+			return "", fmt.Errorf("wallet: derive: %w", err)
+		}
+	}
+	return fmt.Sprintf("%x", k.Key), nil
+}
+
+// fromMnemonic builds an HD wallet (account index 0) from a seed phrase.
+func fromMnemonic(name, mnemonic string) (*Wallet, error) {
+	priv, err := deriveKey(mnemonic, 0)
+	if err != nil {
+		return nil, err
+	}
+	addr, err := chain.AddressFromPrivKey(priv)
+	if err != nil {
+		return nil, err
+	}
+	return &Wallet{Name: name, Address: addr, Mnemonic: mnemonic, privHex: priv}, nil
+}
+
+// fromHex builds a wallet from a raw private key (legacy keyfiles).
+func fromHex(name, privHex string) (*Wallet, error) {
+	priv := strings.TrimSpace(strings.TrimPrefix(privHex, "0x"))
 	addr, err := chain.AddressFromPrivKey(priv)
 	if err != nil {
 		return nil, err
@@ -62,36 +97,75 @@ func NewStore(dir string) (*Store, error) {
 
 func (s *Store) path(name string) string { return filepath.Join(s.dir, name+".key") }
 
-// Create generates a new wallet and persists it. Errors if the name exists.
-func (s *Store) Create(name string) (*Wallet, error) {
+func validName(name string) error {
 	if name == "" || strings.ContainsAny(name, "/\\.") {
-		return nil, fmt.Errorf("wallet: invalid name %q", name)
+		return fmt.Errorf("wallet: invalid name %q", name)
+	}
+	return nil
+}
+
+// Create generates a new HD wallet (fresh 12-word mnemonic) and persists the
+// mnemonic. It returns the wallet; w.Mnemonic is the seed phrase to back up.
+func (s *Store) Create(name string) (*Wallet, error) {
+	if err := validName(name); err != nil {
+		return nil, err
 	}
 	if _, err := os.Stat(s.path(name)); err == nil {
 		return nil, fmt.Errorf("wallet: %q already exists", name)
 	}
-	w, err := generate(name)
+	entropy, err := bip39.NewEntropy(128) // 12 words
+	if err != nil {
+		return nil, fmt.Errorf("wallet: entropy: %w", err)
+	}
+	mnemonic, err := bip39.NewMnemonic(entropy)
+	if err != nil {
+		return nil, fmt.Errorf("wallet: mnemonic: %w", err)
+	}
+	return s.save(name, mnemonic)
+}
+
+// Import recreates a wallet from an existing seed phrase.
+func (s *Store) Import(name, mnemonic string) (*Wallet, error) {
+	if err := validName(name); err != nil {
+		return nil, err
+	}
+	mnemonic = strings.Join(strings.Fields(mnemonic), " ")
+	if !bip39.IsMnemonicValid(mnemonic) {
+		return nil, fmt.Errorf("wallet: invalid seed phrase")
+	}
+	if _, err := os.Stat(s.path(name)); err == nil {
+		return nil, fmt.Errorf("wallet: %q already exists", name)
+	}
+	return s.save(name, mnemonic)
+}
+
+func (s *Store) save(name, mnemonic string) (*Wallet, error) {
+	w, err := fromMnemonic(name, mnemonic)
 	if err != nil {
 		return nil, err
 	}
-	if err := os.WriteFile(s.path(name), []byte(w.privHex), 0o600); err != nil {
+	if err := os.WriteFile(s.path(name), []byte(mnemonic+"\n"), 0o600); err != nil {
 		return nil, fmt.Errorf("wallet: save %q: %w", name, err)
 	}
 	return w, nil
 }
 
-// Load reads a wallet by name.
+// Load reads a wallet by name. HD wallets store a mnemonic; legacy wallets store
+// a raw hex key — both load.
 func (s *Store) Load(name string) (*Wallet, error) {
 	data, err := os.ReadFile(s.path(name))
 	if err != nil {
 		return nil, fmt.Errorf("wallet: load %q: %w", name, err)
 	}
-	priv := strings.TrimSpace(strings.TrimPrefix(string(data), "0x"))
-	addr, err := chain.AddressFromPrivKey(priv)
+	content := strings.TrimSpace(string(data))
+	if bip39.IsMnemonicValid(content) {
+		return fromMnemonic(name, content)
+	}
+	w, err := fromHex(name, content)
 	if err != nil {
 		return nil, fmt.Errorf("wallet: %q corrupt: %w", name, err)
 	}
-	return &Wallet{Name: name, Address: addr, privHex: priv}, nil
+	return w, nil
 }
 
 // List returns the names of stored wallets.

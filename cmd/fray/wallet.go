@@ -18,7 +18,8 @@ import (
 const walletUsage = `fray wallet <command> [flags]
 
 commands:
-  new       generate a new self-custodied wallet (prints the address to fund)
+  new       generate a new HD wallet (BIP-39 seed phrase; prints address + phrase)
+  import    recreate a wallet from a seed phrase (--mnemonic)
   list      list wallet names in the keystore
   address   print a wallet's address
   balance   print a wallet's native (ETH) balance  (--rpc required)
@@ -46,6 +47,8 @@ func runWallet(args []string, out io.Writer) error {
 	switch cmd {
 	case "new":
 		return walletNew(rest, out)
+	case "import":
+		return walletImport(rest, out)
 	case "list":
 		return walletList(rest, out)
 	case "address":
@@ -93,11 +96,39 @@ func walletNew(args []string, out io.Writer) error {
 	if ks == "" {
 		ks = defaultKeystore()
 	}
-	fmt.Fprintf(out, "Created wallet %q\n", w.Name)
+	fmt.Fprintf(out, "Created HD wallet %q\n", w.Name)
 	fmt.Fprintf(out, "  address:  %s\n", w.Address.Hex())
 	fmt.Fprintf(out, "  keystore: %s\n", filepath.Join(ks, w.Name+".key"))
-	fmt.Fprintf(out, "\nFund this address, then deploy with it. Reveal the key with:\n")
-	fmt.Fprintf(out, "  fray wallet export --name %s\n", w.Name)
+	fmt.Fprintf(out, "\n  ⚠️  SEED PHRASE — write this down; it is the ONLY way to recover this wallet:\n")
+	fmt.Fprintf(out, "  %s\n", w.Mnemonic)
+	fmt.Fprintf(out, "\nFund the address above. Recover later with: fray wallet import --name %s --mnemonic \"…\"\n", w.Name)
+	return nil
+}
+
+func walletImport(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("import", flag.ContinueOnError)
+	fs.SetOutput(out)
+	name := fs.String("name", "", "wallet name")
+	mnemonic := fs.String("mnemonic", "", "BIP-39 seed phrase (quote it)")
+	keystore := fs.String("keystore", "", "keystore dir (default ~/.agentbet/wallets)")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	if strings.TrimSpace(*name) == "" {
+		return fmt.Errorf("--name is required")
+	}
+	if strings.TrimSpace(*mnemonic) == "" {
+		return fmt.Errorf("--mnemonic is required")
+	}
+	st, err := openStore(*keystore)
+	if err != nil {
+		return err
+	}
+	w, err := st.Import(*name, *mnemonic)
+	if err != nil {
+		return err
+	}
+	fmt.Fprintf(out, "Imported wallet %q\n  address: %s\n", w.Name, w.Address.Hex())
 	return nil
 }
 
