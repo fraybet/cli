@@ -112,6 +112,20 @@ func Approve(from, token, spender core.Address, amount *big.Int) (chain.Unsigned
 	return chain.BuildCall(from, token, nil, data), nil
 }
 
+// Transfer builds the unsigned ERC-20 transfer tx (move `amount` of `token` to
+// `to`). Used by `fray wallet send` to move funds between your own wallets.
+func Transfer(from, token, to core.Address, amount *big.Int) (chain.UnsignedTx, error) {
+	parsed, err := abi.JSON(strings.NewReader(erc20TransferABI))
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: erc20 abi: %w", err)
+	}
+	data, err := parsed.Pack("transfer", ethAddr(to), amount)
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: pack transfer: %w", err)
+	}
+	return chain.BuildCall(from, token, nil, data), nil
+}
+
 // Fund builds the unsigned tx to fund the caller's side of a bet.
 func Fund(from, escrow core.Address) (chain.UnsignedTx, error) {
 	return packEscrow(from, escrow, "fund")
@@ -177,6 +191,10 @@ func MintUSDC(from, token, to core.Address, amount *big.Int) (chain.UnsignedTx, 
 
 const erc20ApproveABI = `[{"name":"approve","type":"function","stateMutability":"nonpayable",` +
 	`"inputs":[{"name":"spender","type":"address"},{"name":"amount","type":"uint256"}],` +
+	`"outputs":[{"name":"","type":"bool"}]}]`
+
+const erc20TransferABI = `[{"name":"transfer","type":"function","stateMutability":"nonpayable",` +
+	`"inputs":[{"name":"to","type":"address"},{"name":"amount","type":"uint256"}],` +
 	`"outputs":[{"name":"","type":"bool"}]}]`
 
 const mockMintABI = `[{"name":"mint","type":"function","stateMutability":"nonpayable",` +

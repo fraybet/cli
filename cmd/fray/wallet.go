@@ -12,6 +12,8 @@ import (
 	"time"
 
 	"github.com/fraybet/cli/chain"
+	"github.com/fraybet/cli/core"
+	"github.com/fraybet/cli/txbuild"
 	"github.com/fraybet/cli/wallet"
 )
 
@@ -22,6 +24,7 @@ commands:
   import    recreate a wallet from a seed phrase (--mnemonic)
   list      list wallet names ( * marks the default )
   use       set the default wallet — tx commands act as it unless --wallet is given
+  send      send ERC-20 tokens (default USDC) from a wallet to an address
   address   print a wallet's address
   balance   print a wallet's native (ETH) balance  (--rpc required)
   export    print a wallet's PRIVATE KEY (for e.g. forge --private-key)
@@ -56,6 +59,8 @@ func runWallet(args []string, out io.Writer) error {
 		return walletList(rest, out)
 	case "use":
 		return walletUse(rest, out)
+	case "send":
+		return walletSend(rest, out)
 	case "address":
 		return walletAddress(rest, out)
 	case "balance":
@@ -197,6 +202,35 @@ func walletUse(args []string, out io.Writer) error {
 	}
 	fmt.Fprintf(out, "default wallet: %s (%s)\n", w.Name, w.Address.Hex())
 	return nil
+}
+
+// walletSend signs + broadcasts an ERC-20 transfer from a wallet (default: the
+// default wallet) to an address. Used to move funds between your own wallets.
+func walletSend(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("send", flag.ContinueOnError)
+	fs.SetOutput(out)
+	to := fs.String("to", "", "recipient address")
+	token := fs.String("token", defaultUSDC, "ERC-20 token address (default USDC)")
+	amount := fs.String("amount", "", "amount in base units (USDC has 6 decimals)")
+	sf := addSignerFlags(fs)
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	toA, err := parseAddr(*to, "to")
+	if err != nil {
+		return err
+	}
+	tokenA, err := parseAddr(*token, "token")
+	if err != nil {
+		return err
+	}
+	amt, err := parseBig(*amount, "amount")
+	if err != nil {
+		return err
+	}
+	return sf.run(out, "send", "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.Transfer(from, tokenA, toA, amt)
+	})
 }
 
 func walletAddress(args []string, out io.Writer) error {
