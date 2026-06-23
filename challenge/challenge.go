@@ -148,11 +148,24 @@ func (o Open) IsExpired(now uint64) bool {
 // Side mapping: the proposer's stake/address land on their chosen side, the
 // counterparty on the other. Defaults (challenge window, claim deadline, nonce)
 // are applied by bets.NewDraft so the on-chain terms are produced one way.
+//
+// Accept does NOT enforce the proposal's expiry — callers acting on a real link
+// must use AcceptAt so a stale challenge can't be accepted.
 func (o Open) Accept(counterparty core.Address) (bets.Draft, error) {
 	if err := o.Validate(); err != nil {
 		return bets.Draft{}, err
 	}
 	return o.draft(counterparty)
+}
+
+// AcceptAt is Accept with expiry enforcement: it rejects a proposal whose Expiry
+// has passed as of `now`. This is what the CLI/MCP accept-link flow uses, so an
+// expired challenge link can't be drafted or created.
+func (o Open) AcceptAt(counterparty core.Address, now uint64) (bets.Draft, error) {
+	if o.IsExpired(now) {
+		return bets.Draft{}, fmt.Errorf("challenge: proposal expired at %d (now %d)", o.Expiry, now)
+	}
+	return o.Accept(counterparty)
 }
 
 // draft maps the proposer/counterparty onto YES/NO and produces the validated

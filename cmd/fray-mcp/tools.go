@@ -4,6 +4,7 @@ import (
 	"context"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
@@ -282,7 +283,7 @@ func acceptTool(_ context.Context, _ *mcp.CallToolRequest, in acceptArgs) (*mcp.
 	if err != nil {
 		return errResult[acceptView](err)
 	}
-	d, err := o.Accept(as)
+	d, err := o.AcceptAt(as, uint64(time.Now().Unix()))
 	if err != nil {
 		return errResult[acceptView](err)
 	}

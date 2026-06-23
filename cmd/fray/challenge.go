@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"os"
 	"strings"
+	"time"
 
 	"github.com/fraybet/cli/challenge"
 	"github.com/fraybet/cli/core"
@@ -180,7 +181,7 @@ func betAcceptLink(args []string, out io.Writer) error {
 		return err
 	}
 
-	d, err := o.Accept(asA)
+	d, err := o.AcceptAt(asA, uint64(time.Now().Unix()))
 	if err != nil {
 		return err
 	}
