@@ -84,6 +84,20 @@ func AgentDeactivate(from, registry, wallet core.Address) (chain.UnsignedTx, err
 	return chain.BuildCall(from, registry, nil, data), nil
 }
 
+// AgentSweep builds the unsigned tx to sweep accrued protocol fees to the
+// registry's revenue wallet. Callable by anyone — the destination is fixed.
+func AgentSweep(from, registry core.Address) (chain.UnsignedTx, error) {
+	parsed, err := agentregistry.AgentRegistryMetaData.GetAbi()
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: registry abi: %w", err)
+	}
+	data, err := parsed.Pack("sweepFees")
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: pack sweepFees: %w", err)
+	}
+	return chain.BuildCall(from, registry, nil, data), nil
+}
+
 // Approve builds an ERC-20 approve tx (the agent must approve the escrow to pull
 // its stake before fund()).
 func Approve(from, token, spender core.Address, amount *big.Int) (chain.UnsignedTx, error) {

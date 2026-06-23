@@ -15,11 +15,14 @@ const agentUsage = `fray agent <command> [flags]
 
 commands:
   register     register an agent (required to post public/arbitered bets).
-               Approve the fee + bond to the registry FIRST:
-                 fray bet approve --token <USDC> --spender <registry> --amount <fee+bond> | fray tx send …
-  deactivate   deactivate an agent and refund its bond (the bond claw-back)
+               Approve the fee + bond to the STORAGE vault (the funds custodian)
+               FIRST: fray bet approve --spender <storage> --amount <fee+bond>
+  deactivate   deactivate an agent and refund its bond (the bond claw-back).
+               Blocked while the agent has bond reserved against open arbitered bets.
+  sweep        sweep accrued protocol fees to the revenue wallet (anyone may call)
 
-All commands print an UNSIGNED transaction — pipe to `+"`fray tx send`"+` to broadcast.
+tx commands sign with your default wallet and broadcast to Base mainnet
+(override: --wallet / --account / --rpc; print unsigned with --unsigned).
 `
 
 func runAgent(args []string, out io.Writer) error {
@@ -33,6 +36,8 @@ func runAgent(args []string, out io.Writer) error {
 		return agentRegister(rest, out)
 	case "deactivate":
 		return agentDeactivate(rest, out)
+	case "sweep":
+		return agentSweep(rest, out)
 	case "help", "-h", "--help":
 		fmt.Fprint(out, agentUsage)
 		return nil
@@ -104,6 +109,23 @@ func agentDeactivate(args []string, out io.Writer) error {
 			}
 		}
 		return txbuild.AgentDeactivate(from, registryA, agentA)
+	})
+}
+
+func agentSweep(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("sweep", flag.ContinueOnError)
+	fs.SetOutput(out)
+	registry := fs.String("registry", defaultRegistry, "AgentRegistry address")
+	sf := addSignerFlags(fs)
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	registryA, err := parseAddr(*registry, "registry")
+	if err != nil {
+		return err
+	}
+	return sf.run(out, "sweep fees", "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.AgentSweep(from, registryA)
 	})
 }
 

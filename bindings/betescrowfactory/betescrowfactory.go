@@ -49,7 +49,7 @@ type BetEscrowTerms struct {
 
 // BetEscrowFactoryMetaData contains all meta data concerning the BetEscrowFactory contract.
 var BetEscrowFactoryMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"allowlist_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"pauseController_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"executionFee_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"allowlist\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractStablecoinAllowlist\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"create\",\"inputs\":[{\"name\":\"terms\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]}],\"outputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"executionFee\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"pauseController\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractEmergencyPauseController\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIAgentRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"BetCreated\",\"inputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"yesAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"termsHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"uint8\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ProtocolPaused\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TokenNotAllowed\",\"inputs\":[]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"allowlist_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"pauseController_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"allowlist\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractStablecoinAllowlist\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"create\",\"inputs\":[{\"name\":\"terms\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]}],\"outputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"pauseController\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractEmergencyPauseController\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIAgentRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"BetCreated\",\"inputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"yesAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"termsHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"uint8\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ProtocolPaused\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TokenNotAllowed\",\"inputs\":[]}]",
 }
 
 // BetEscrowFactoryABI is the input ABI used to generate the binding from.
@@ -258,37 +258,6 @@ func (_BetEscrowFactory *BetEscrowFactorySession) BaseFeeBps() (*big.Int, error)
 // Solidity: function baseFeeBps() view returns(uint256)
 func (_BetEscrowFactory *BetEscrowFactoryCallerSession) BaseFeeBps() (*big.Int, error) {
 	return _BetEscrowFactory.Contract.BaseFeeBps(&_BetEscrowFactory.CallOpts)
-}
-
-// ExecutionFee is a free data retrieval call binding the contract method 0x40e9903b.
-//
-// Solidity: function executionFee() view returns(uint256)
-func (_BetEscrowFactory *BetEscrowFactoryCaller) ExecutionFee(opts *bind.CallOpts) (*big.Int, error) {
-	var out []interface{}
-	err := _BetEscrowFactory.contract.Call(opts, &out, "executionFee")
-
-	if err != nil {
-		return *new(*big.Int), err
-	}
-
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
-
-	return out0, err
-
-}
-
-// ExecutionFee is a free data retrieval call binding the contract method 0x40e9903b.
-//
-// Solidity: function executionFee() view returns(uint256)
-func (_BetEscrowFactory *BetEscrowFactorySession) ExecutionFee() (*big.Int, error) {
-	return _BetEscrowFactory.Contract.ExecutionFee(&_BetEscrowFactory.CallOpts)
-}
-
-// ExecutionFee is a free data retrieval call binding the contract method 0x40e9903b.
-//
-// Solidity: function executionFee() view returns(uint256)
-func (_BetEscrowFactory *BetEscrowFactoryCallerSession) ExecutionFee() (*big.Int, error) {
-	return _BetEscrowFactory.Contract.ExecutionFee(&_BetEscrowFactory.CallOpts)
 }
 
 // PauseController is a free data retrieval call binding the contract method 0x60b47789.

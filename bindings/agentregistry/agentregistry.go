@@ -29,48 +29,27 @@ var (
 	_ = abi.ConvertType
 )
 
-// AgentRegistryAgentProfile is an auto generated low-level Go binding around an user-defined struct.
-type AgentRegistryAgentProfile struct {
+// AgentStorageProfile is an auto generated low-level Go binding around an user-defined struct.
+type AgentStorageProfile struct {
 	Owner        common.Address
 	Wallet       common.Address
 	Signer       common.Address
 	PolicyHash   [32]byte
 	MetadataHash [32]byte
 	Bond         *big.Int
+	Reserved     *big.Int
 	CreatedAt    uint64
 	Active       bool
 }
 
 // AgentRegistryMetaData contains all meta data concerning the AgentRegistry contract.
 var AgentRegistryMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"bondToken_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"registrationFee_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registrationBond_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"admin_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"accruedFees\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"admin\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"agent\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structAgentRegistry.AgentProfile\",\"components\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"metadataHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"bond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"createdAt\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"active\",\"type\":\"bool\",\"internalType\":\"bool\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"bondToken\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"deactivate\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"isActive\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"register\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"metadataHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"registrationBond\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registrationFee\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"setRevenueWallet\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"signerOf\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"slash\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"sweepFees\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"transferAdmin\",\"inputs\":[{\"name\":\"newAdmin\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"updatePolicy\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"updateSigner\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"event\",\"name\":\"AdminTransferred\",\"inputs\":[{\"name\":\"admin\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentDeactivated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentPolicyUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentRegistered\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"owner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"},{\"name\":\"bond\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"fee\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentSignerUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondRefunded\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondSlashed\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"FeesSwept\",\"inputs\":[{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"RevenueWalletUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AlreadyRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotAdmin\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotOwner\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ReentrancyGuardReentrantCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"SafeERC20FailedOperation\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ZeroAddress\",\"inputs\":[]}]",
-	Bin: "0x60e060405234801562000010575f80fd5b506040516200125238038062001252833981016040819052620000339162000105565b60017f9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00556001600160a01b03851615806200007557506001600160a01b038216155b806200008857506001600160a01b038116155b15620000a75760405163d92e233d60e01b815260040160405180910390fd5b6001600160a01b0394851660805260a09390935260c0919091525f80549184166001600160a01b0319928316179055600180549290931691161790556200015f565b80516001600160a01b038116811462000100575f80fd5b919050565b5f805f805f60a086880312156200011a575f80fd5b6200012586620000e9565b945060208601519350604086015192506200014360608701620000e9565b91506200015360808701620000e9565b90509295509295909350565b60805160a05160c051611089620001c95f395f818161014901528181610a0101528181610b020152610c8901525f818161010f01528181610a2201528181610a850152610caa01525f81816102ed0152818161043e015281816108fb0152610a5b01526110895ff3fe608060405234801561000f575f80fd5b5060043610610106575f3560e01c806392e423b51161009e578063c96be4cb1161006e578063c96be4cb1461030f578063d113b95c14610322578063e8527e381461032a578063f851a4401461033d578063fb235f341461034f575f80fd5b806392e423b51461020857806397cc56fa146102905780639f8a13d7146102a3578063c28f4392146102e8575f80fd5b80635b5175d5116100d95780635b5175d5146101ab578063682c2058146101d957806375829def146101e25780638fd016e8146101f5575f80fd5b806314c44e091461010a578063373b9dbd146101445780633ea053eb1461016b5780634447842514610180575b5f80fd5b6101317f000000000000000000000000000000000000000000000000000000000000000081565b6040519081526020015b60405180910390f35b6101317f000000000000000000000000000000000000000000000000000000000000000081565b61017e610179366004610f5c565b610362565b005b600154610193906001600160a01b031681565b6040516001600160a01b03909116815260200161013b565b6101936101b9366004610f5c565b6001600160a01b039081165f908152600360205260409020600201541690565b61013160025481565b61017e6101f0366004610f5c565b6104c9565b61017e610203366004610f7c565b610561565b61021b610216366004610f5c565b610658565b6040805182516001600160a01b039081168252602080850151821690830152838301511691810191909152606080830151908201526080808301519082015260a0808301519082015260c08083015167ffffffffffffffff169082015260e0918201511515918101919091526101000161013b565b61017e61029e366004610fad565b610748565b6102d86102b1366004610f5c565b6001600160a01b03165f90815260036020526040902060060154600160401b900460ff1690565b604051901515815260200161013b565b6101937f000000000000000000000000000000000000000000000000000000000000000081565b61017e61031d366004610f5c565b6107fb565b61017e6108d4565b61017e610338366004610fd5565b610980565b5f54610193906001600160a01b031681565b61017e61035d366004610f5c565b610d19565b61036a610db3565b6001600160a01b038082165f90815260036020526040902080548392166103a45760405163aba4733960e01b815260040160405180910390fd5b80546001600160a01b031633146103ce576040516330cd747160e01b815260040160405180910390fd5b6001600160a01b0383165f8181526003602052604080822060068101805460ff60401b19169055600581018054908490559151909391927fa58c733780f5c1527d6106ff1e731cbf2e9ffc0eb11ad399ca33ea55f057ddf491a280156104ac578154610467906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000008116911683610dce565b81546040518281526001600160a01b03918216918716907f4fac74d6b4ed45cb641c8e730951b01c4dbcae0565cf330e909230492bd07d789060200160405180910390a35b505050506104c660015f8051602061103483398151915255565b50565b5f546001600160a01b031633146104f357604051637bfa4b9f60e01b815260040160405180910390fd5b6001600160a01b03811661051a5760405163d92e233d60e01b815260040160405180910390fd5b5f80546001600160a01b0319166001600160a01b038316908117825560405190917fe22b4f506b7da9a528a95d7063a6cde8d2b6268773b1f7f65c00057531704a3d91a250565b6001600160a01b038083165f908152600360205260409020805484921661059b5760405163aba4733960e01b815260040160405180910390fd5b80546001600160a01b031633146105c5576040516330cd747160e01b815260040160405180910390fd5b6001600160a01b0383166105ec5760405163d92e233d60e01b815260040160405180910390fd5b6001600160a01b038481165f8181526003602090815260409182902060020180546001600160a01b0319169488169485179055905192835290917f15c539f3c72a7122b9be60c5a7d9929c4882896eca5158969a1877c067192d9b91015b60405180910390a250505050565b60408051610100810182525f80825260208201819052918101829052606081018290526080810182905260a0810182905260c0810182905260e08101919091526001600160a01b038281165f9081526003602081815260409283902083516101008101855281548616808252600183015487169382019390935260028201549095169385019390935290820154606084015260048201546080840152600582015460a084015260069091015467ffffffffffffffff811660c0840152600160401b900460ff16151560e08301526107425760405163aba4733960e01b815260040160405180910390fd5b92915050565b6001600160a01b038083165f90815260036020526040902080548492166107825760405163aba4733960e01b815260040160405180910390fd5b80546001600160a01b031633146107ac576040516330cd747160e01b815260040160405180910390fd5b6001600160a01b0384165f8181526003602081905260409182902001859055517fcc8946cc5e90c32269cfbfe3ca38dea5bf8e331038589b2f3ede2c35c42fffa39061064a9086815260200190565b5f546001600160a01b0316331461082557604051637bfa4b9f60e01b815260040160405180910390fd5b6001600160a01b038082165f908152600360205260409020805490911661085f5760405163aba4733960e01b815260040160405180910390fd5b6005810180545f9182905560068301805460ff60401b19169055600280549192839261088c908490611014565b90915550506040518181526001600160a01b038416907f9c78aa0eb382c004d853205ff9929a2caed00de0cdd490849c8b84d7f461a39d9060200160405180910390a2505050565b6108dc610db3565b600280545f909155801561096757600154610924906001600160a01b037f00000000000000000000000000000000000000000000000000000000000000008116911683610dce565b6001546040518281526001600160a01b03909116907fb6c81b526e1bd55a3845d8caa6fe0c1ce87b3c9e534eec43f43b3c1849d4e2e89060200160405180910390a25b5061097e60015f8051602061103483398151915255565b565b610988610db3565b6001600160a01b03841615806109a557506001600160a01b038316155b156109c35760405163d92e233d60e01b815260040160405180910390fd5b6001600160a01b038481165f9081526003602052604090205416156109fb57604051630ea075bf60e21b815260040160405180910390fd5b5f610a467f00000000000000000000000000000000000000000000000000000000000000007f0000000000000000000000000000000000000000000000000000000000000000611014565b90508015610a8357610a836001600160a01b037f000000000000000000000000000000000000000000000000000000000000000016333084610e0d565b7f000000000000000000000000000000000000000000000000000000000000000060025f828254610ab49190611014565b92505081905550604051806101000160405280336001600160a01b03168152602001866001600160a01b03168152602001856001600160a01b031681526020018481526020018381526020017f000000000000000000000000000000000000000000000000000000000000000081526020014267ffffffffffffffff1681526020016001151581525060035f876001600160a01b03166001600160a01b031681526020019081526020015f205f820151815f015f6101000a8154816001600160a01b0302191690836001600160a01b031602179055506020820151816001015f6101000a8154816001600160a01b0302191690836001600160a01b031602179055506040820151816002015f6101000a8154816001600160a01b0302191690836001600160a01b03160217905550606082015181600301556080820151816004015560a0820151816005015560c0820151816006015f6101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060e08201518160060160086101000a81548160ff021916908315150217905550905050336001600160a01b0316856001600160a01b03167fcc059d6320dd91f6d72ca6e83caaf137242df66d024a6e14412a0472557dba63867f00000000000000000000000000000000000000000000000000000000000000007f0000000000000000000000000000000000000000000000000000000000000000604051610cf4939291906001600160a01b039390931683526020830191909152604082015260600190565b60405180910390a350610d1360015f8051602061103483398151915255565b50505050565b5f546001600160a01b03163314610d4357604051637bfa4b9f60e01b815260040160405180910390fd5b6001600160a01b038116610d6a5760405163d92e233d60e01b815260040160405180910390fd5b600180546001600160a01b0319166001600160a01b0383169081179091556040517facfd38a8c0e371d5f091a49bf6aafad89ed17a551f8b2f152420408a0d4b3e61905f90a250565b610dbb610e43565b60025f8051602061103483398151915255565b610ddb8383836001610e72565b610e0857604051635274afe760e01b81526001600160a01b03841660048201526024015b60405180910390fd5b505050565b610e1b848484846001610ed4565b610d1357604051635274afe760e01b81526001600160a01b0385166004820152602401610dff565b5f805160206110348339815191525460020361097e57604051633ee5aeb560e01b815260040160405180910390fd5b60405163a9059cbb60e01b5f8181526001600160a01b038616600452602485905291602083604481808b5af1925060015f51148316610ec8578383151615610ebc573d5f823e3d81fd5b5f873b113d1516831692505b60405250949350505050565b6040516323b872dd60e01b5f8181526001600160a01b038781166004528616602452604485905291602083606481808c5af1925060015f51148316610f30578383151615610f24573d5f823e3d81fd5b5f883b113d1516831692505b604052505f60605295945050505050565b80356001600160a01b0381168114610f57575f80fd5b919050565b5f60208284031215610f6c575f80fd5b610f7582610f41565b9392505050565b5f8060408385031215610f8d575f80fd5b610f9683610f41565b9150610fa460208401610f41565b90509250929050565b5f8060408385031215610fbe575f80fd5b610fc783610f41565b946020939093013593505050565b5f805f8060808587031215610fe8575f80fd5b610ff185610f41565b9350610fff60208601610f41565b93969395505050506040820135916060013590565b8082018082111561074257634e487b7160e01b5f52601160045260245ffdfe9b779b17422d0df92223018b32b4d1fa46e071723d6817e2486d003becc55f00a264697066735822122074cf9454198a8707acc79b3272c85d7be3bf7d0b59ec86f5a454184a7474ade964736f6c63430008180033",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"UPGRADE_INTERFACE_VERSION\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"admin\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"agent\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"tuple\",\"internalType\":\"structAgentStorage.Profile\",\"components\":[{\"name\":\"owner\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"metadataHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"bond\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"reserved\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"createdAt\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"active\",\"type\":\"bool\",\"internalType\":\"bool\"}]}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"arbitrationFee\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"charge\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"deactivate\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"factory\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"freeBond\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"initialize\",\"inputs\":[{\"name\":\"store_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"registrationFee_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registrationBond_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"arbitrationFee_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"admin_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"factory_\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"isActive\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"onArbiteredBet\",\"inputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"proxiableUUID\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"register\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"metadataHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"registrationBond\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registrationFee\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"release\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"reserveTaker\",\"inputs\":[{\"name\":\"taker\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"setArbitrationFee\",\"inputs\":[{\"name\":\"fee\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setFactory\",\"inputs\":[{\"name\":\"factory_\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"setRevenueWallet\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"signerOf\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"slash\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"store\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractAgentStorage\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"sweepFees\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"transferAdmin\",\"inputs\":[{\"name\":\"newAdmin\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"updatePolicy\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"updateSigner\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"internalType\":\"address\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"upgradeToAndCall\",\"inputs\":[{\"name\":\"newImplementation\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"data\",\"type\":\"bytes\",\"internalType\":\"bytes\"}],\"outputs\":[],\"stateMutability\":\"payable\"},{\"type\":\"event\",\"name\":\"AdminTransferred\",\"inputs\":[{\"name\":\"admin\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentDeactivated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentPolicyUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"policyHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentRegistered\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"owner\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"},{\"name\":\"bond\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"},{\"name\":\"fee\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"AgentSignerUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"signer\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"ArbitrationFeeUpdated\",\"inputs\":[{\"name\":\"fee\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondCharged\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondRefunded\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondReleased\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondReserved\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"BondSlashed\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"FactoryUpdated\",\"inputs\":[{\"name\":\"factory\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"FeesSwept\",\"inputs\":[{\"name\":\"to\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"amount\",\"type\":\"uint256\",\"indexed\":false,\"internalType\":\"uint256\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Initialized\",\"inputs\":[{\"name\":\"version\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"RevenueWalletUpdated\",\"inputs\":[{\"name\":\"wallet\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Upgraded\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AddressEmptyCode\",\"inputs\":[{\"name\":\"target\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"AlreadyRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"BadAmount\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"BondReservedOpen\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ERC1967InvalidImplementation\",\"inputs\":[{\"name\":\"implementation\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"ERC1967NonPayable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"FailedCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InsufficientBond\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidInitialization\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotActive\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotAdmin\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotEscrow\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotFactory\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotInitializing\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotOwner\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnauthorizedCallContext\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"UUPSUnsupportedProxiableUUID\",\"inputs\":[{\"name\":\"slot\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}]},{\"type\":\"error\",\"name\":\"ZeroAddress\",\"inputs\":[]}]",
 }
 
 // AgentRegistryABI is the input ABI used to generate the binding from.
 // Deprecated: Use AgentRegistryMetaData.ABI instead.
 var AgentRegistryABI = AgentRegistryMetaData.ABI
-
-// AgentRegistryBin is the compiled bytecode used for deploying new contracts.
-// Deprecated: Use AgentRegistryMetaData.Bin instead.
-var AgentRegistryBin = AgentRegistryMetaData.Bin
-
-// DeployAgentRegistry deploys a new Ethereum contract, binding an instance of AgentRegistry to it.
-func DeployAgentRegistry(auth *bind.TransactOpts, backend bind.ContractBackend, bondToken_ common.Address, registrationFee_ *big.Int, registrationBond_ *big.Int, admin_ common.Address, revenueWallet_ common.Address) (common.Address, *types.Transaction, *AgentRegistry, error) {
-	parsed, err := AgentRegistryMetaData.GetAbi()
-	if err != nil {
-		return common.Address{}, nil, nil, err
-	}
-	if parsed == nil {
-		return common.Address{}, nil, nil, errors.New("GetABI returned nil")
-	}
-
-	address, tx, contract, err := bind.DeployContract(auth, *parsed, common.FromHex(AgentRegistryBin), backend, bondToken_, registrationFee_, registrationBond_, admin_, revenueWallet_)
-	if err != nil {
-		return common.Address{}, nil, nil, err
-	}
-	return address, tx, &AgentRegistry{AgentRegistryCaller: AgentRegistryCaller{contract: contract}, AgentRegistryTransactor: AgentRegistryTransactor{contract: contract}, AgentRegistryFilterer: AgentRegistryFilterer{contract: contract}}, nil
-}
 
 // AgentRegistry is an auto generated Go binding around an Ethereum contract.
 type AgentRegistry struct {
@@ -214,35 +193,35 @@ func (_AgentRegistry *AgentRegistryTransactorRaw) Transact(opts *bind.TransactOp
 	return _AgentRegistry.Contract.contract.Transact(opts, method, params...)
 }
 
-// AccruedFees is a free data retrieval call binding the contract method 0x682c2058.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function accruedFees() view returns(uint256)
-func (_AgentRegistry *AgentRegistryCaller) AccruedFees(opts *bind.CallOpts) (*big.Int, error) {
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_AgentRegistry *AgentRegistryCaller) UPGRADEINTERFACEVERSION(opts *bind.CallOpts) (string, error) {
 	var out []interface{}
-	err := _AgentRegistry.contract.Call(opts, &out, "accruedFees")
+	err := _AgentRegistry.contract.Call(opts, &out, "UPGRADE_INTERFACE_VERSION")
 
 	if err != nil {
-		return *new(*big.Int), err
+		return *new(string), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
 
 	return out0, err
 
 }
 
-// AccruedFees is a free data retrieval call binding the contract method 0x682c2058.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function accruedFees() view returns(uint256)
-func (_AgentRegistry *AgentRegistrySession) AccruedFees() (*big.Int, error) {
-	return _AgentRegistry.Contract.AccruedFees(&_AgentRegistry.CallOpts)
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_AgentRegistry *AgentRegistrySession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _AgentRegistry.Contract.UPGRADEINTERFACEVERSION(&_AgentRegistry.CallOpts)
 }
 
-// AccruedFees is a free data retrieval call binding the contract method 0x682c2058.
+// UPGRADEINTERFACEVERSION is a free data retrieval call binding the contract method 0xad3cb1cc.
 //
-// Solidity: function accruedFees() view returns(uint256)
-func (_AgentRegistry *AgentRegistryCallerSession) AccruedFees() (*big.Int, error) {
-	return _AgentRegistry.Contract.AccruedFees(&_AgentRegistry.CallOpts)
+// Solidity: function UPGRADE_INTERFACE_VERSION() view returns(string)
+func (_AgentRegistry *AgentRegistryCallerSession) UPGRADEINTERFACEVERSION() (string, error) {
+	return _AgentRegistry.Contract.UPGRADEINTERFACEVERSION(&_AgentRegistry.CallOpts)
 }
 
 // Admin is a free data retrieval call binding the contract method 0xf851a440.
@@ -278,16 +257,16 @@ func (_AgentRegistry *AgentRegistryCallerSession) Admin() (common.Address, error
 
 // Agent is a free data retrieval call binding the contract method 0x92e423b5.
 //
-// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint64,bool))
-func (_AgentRegistry *AgentRegistryCaller) Agent(opts *bind.CallOpts, wallet common.Address) (AgentRegistryAgentProfile, error) {
+// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint256,uint64,bool))
+func (_AgentRegistry *AgentRegistryCaller) Agent(opts *bind.CallOpts, wallet common.Address) (AgentStorageProfile, error) {
 	var out []interface{}
 	err := _AgentRegistry.contract.Call(opts, &out, "agent", wallet)
 
 	if err != nil {
-		return *new(AgentRegistryAgentProfile), err
+		return *new(AgentStorageProfile), err
 	}
 
-	out0 := *abi.ConvertType(out[0], new(AgentRegistryAgentProfile)).(*AgentRegistryAgentProfile)
+	out0 := *abi.ConvertType(out[0], new(AgentStorageProfile)).(*AgentStorageProfile)
 
 	return out0, err
 
@@ -295,24 +274,55 @@ func (_AgentRegistry *AgentRegistryCaller) Agent(opts *bind.CallOpts, wallet com
 
 // Agent is a free data retrieval call binding the contract method 0x92e423b5.
 //
-// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint64,bool))
-func (_AgentRegistry *AgentRegistrySession) Agent(wallet common.Address) (AgentRegistryAgentProfile, error) {
+// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint256,uint64,bool))
+func (_AgentRegistry *AgentRegistrySession) Agent(wallet common.Address) (AgentStorageProfile, error) {
 	return _AgentRegistry.Contract.Agent(&_AgentRegistry.CallOpts, wallet)
 }
 
 // Agent is a free data retrieval call binding the contract method 0x92e423b5.
 //
-// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint64,bool))
-func (_AgentRegistry *AgentRegistryCallerSession) Agent(wallet common.Address) (AgentRegistryAgentProfile, error) {
+// Solidity: function agent(address wallet) view returns((address,address,address,bytes32,bytes32,uint256,uint256,uint64,bool))
+func (_AgentRegistry *AgentRegistryCallerSession) Agent(wallet common.Address) (AgentStorageProfile, error) {
 	return _AgentRegistry.Contract.Agent(&_AgentRegistry.CallOpts, wallet)
 }
 
-// BondToken is a free data retrieval call binding the contract method 0xc28f4392.
+// ArbitrationFee is a free data retrieval call binding the contract method 0x1cfa7ba8.
 //
-// Solidity: function bondToken() view returns(address)
-func (_AgentRegistry *AgentRegistryCaller) BondToken(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function arbitrationFee() view returns(uint256)
+func (_AgentRegistry *AgentRegistryCaller) ArbitrationFee(opts *bind.CallOpts) (*big.Int, error) {
 	var out []interface{}
-	err := _AgentRegistry.contract.Call(opts, &out, "bondToken")
+	err := _AgentRegistry.contract.Call(opts, &out, "arbitrationFee")
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// ArbitrationFee is a free data retrieval call binding the contract method 0x1cfa7ba8.
+//
+// Solidity: function arbitrationFee() view returns(uint256)
+func (_AgentRegistry *AgentRegistrySession) ArbitrationFee() (*big.Int, error) {
+	return _AgentRegistry.Contract.ArbitrationFee(&_AgentRegistry.CallOpts)
+}
+
+// ArbitrationFee is a free data retrieval call binding the contract method 0x1cfa7ba8.
+//
+// Solidity: function arbitrationFee() view returns(uint256)
+func (_AgentRegistry *AgentRegistryCallerSession) ArbitrationFee() (*big.Int, error) {
+	return _AgentRegistry.Contract.ArbitrationFee(&_AgentRegistry.CallOpts)
+}
+
+// Factory is a free data retrieval call binding the contract method 0xc45a0155.
+//
+// Solidity: function factory() view returns(address)
+func (_AgentRegistry *AgentRegistryCaller) Factory(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _AgentRegistry.contract.Call(opts, &out, "factory")
 
 	if err != nil {
 		return *new(common.Address), err
@@ -324,18 +334,49 @@ func (_AgentRegistry *AgentRegistryCaller) BondToken(opts *bind.CallOpts) (commo
 
 }
 
-// BondToken is a free data retrieval call binding the contract method 0xc28f4392.
+// Factory is a free data retrieval call binding the contract method 0xc45a0155.
 //
-// Solidity: function bondToken() view returns(address)
-func (_AgentRegistry *AgentRegistrySession) BondToken() (common.Address, error) {
-	return _AgentRegistry.Contract.BondToken(&_AgentRegistry.CallOpts)
+// Solidity: function factory() view returns(address)
+func (_AgentRegistry *AgentRegistrySession) Factory() (common.Address, error) {
+	return _AgentRegistry.Contract.Factory(&_AgentRegistry.CallOpts)
 }
 
-// BondToken is a free data retrieval call binding the contract method 0xc28f4392.
+// Factory is a free data retrieval call binding the contract method 0xc45a0155.
 //
-// Solidity: function bondToken() view returns(address)
-func (_AgentRegistry *AgentRegistryCallerSession) BondToken() (common.Address, error) {
-	return _AgentRegistry.Contract.BondToken(&_AgentRegistry.CallOpts)
+// Solidity: function factory() view returns(address)
+func (_AgentRegistry *AgentRegistryCallerSession) Factory() (common.Address, error) {
+	return _AgentRegistry.Contract.Factory(&_AgentRegistry.CallOpts)
+}
+
+// FreeBond is a free data retrieval call binding the contract method 0xe132b025.
+//
+// Solidity: function freeBond(address wallet) view returns(uint256)
+func (_AgentRegistry *AgentRegistryCaller) FreeBond(opts *bind.CallOpts, wallet common.Address) (*big.Int, error) {
+	var out []interface{}
+	err := _AgentRegistry.contract.Call(opts, &out, "freeBond", wallet)
+
+	if err != nil {
+		return *new(*big.Int), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(*big.Int)).(**big.Int)
+
+	return out0, err
+
+}
+
+// FreeBond is a free data retrieval call binding the contract method 0xe132b025.
+//
+// Solidity: function freeBond(address wallet) view returns(uint256)
+func (_AgentRegistry *AgentRegistrySession) FreeBond(wallet common.Address) (*big.Int, error) {
+	return _AgentRegistry.Contract.FreeBond(&_AgentRegistry.CallOpts, wallet)
+}
+
+// FreeBond is a free data retrieval call binding the contract method 0xe132b025.
+//
+// Solidity: function freeBond(address wallet) view returns(uint256)
+func (_AgentRegistry *AgentRegistryCallerSession) FreeBond(wallet common.Address) (*big.Int, error) {
+	return _AgentRegistry.Contract.FreeBond(&_AgentRegistry.CallOpts, wallet)
 }
 
 // IsActive is a free data retrieval call binding the contract method 0x9f8a13d7.
@@ -367,6 +408,37 @@ func (_AgentRegistry *AgentRegistrySession) IsActive(wallet common.Address) (boo
 // Solidity: function isActive(address wallet) view returns(bool)
 func (_AgentRegistry *AgentRegistryCallerSession) IsActive(wallet common.Address) (bool, error) {
 	return _AgentRegistry.Contract.IsActive(&_AgentRegistry.CallOpts, wallet)
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_AgentRegistry *AgentRegistryCaller) ProxiableUUID(opts *bind.CallOpts) ([32]byte, error) {
+	var out []interface{}
+	err := _AgentRegistry.contract.Call(opts, &out, "proxiableUUID")
+
+	if err != nil {
+		return *new([32]byte), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new([32]byte)).(*[32]byte)
+
+	return out0, err
+
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_AgentRegistry *AgentRegistrySession) ProxiableUUID() ([32]byte, error) {
+	return _AgentRegistry.Contract.ProxiableUUID(&_AgentRegistry.CallOpts)
+}
+
+// ProxiableUUID is a free data retrieval call binding the contract method 0x52d1902d.
+//
+// Solidity: function proxiableUUID() view returns(bytes32)
+func (_AgentRegistry *AgentRegistryCallerSession) ProxiableUUID() ([32]byte, error) {
+	return _AgentRegistry.Contract.ProxiableUUID(&_AgentRegistry.CallOpts)
 }
 
 // RegistrationBond is a free data retrieval call binding the contract method 0x373b9dbd.
@@ -493,6 +565,58 @@ func (_AgentRegistry *AgentRegistryCallerSession) SignerOf(wallet common.Address
 	return _AgentRegistry.Contract.SignerOf(&_AgentRegistry.CallOpts, wallet)
 }
 
+// Store is a free data retrieval call binding the contract method 0x975057e7.
+//
+// Solidity: function store() view returns(address)
+func (_AgentRegistry *AgentRegistryCaller) Store(opts *bind.CallOpts) (common.Address, error) {
+	var out []interface{}
+	err := _AgentRegistry.contract.Call(opts, &out, "store")
+
+	if err != nil {
+		return *new(common.Address), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(common.Address)).(*common.Address)
+
+	return out0, err
+
+}
+
+// Store is a free data retrieval call binding the contract method 0x975057e7.
+//
+// Solidity: function store() view returns(address)
+func (_AgentRegistry *AgentRegistrySession) Store() (common.Address, error) {
+	return _AgentRegistry.Contract.Store(&_AgentRegistry.CallOpts)
+}
+
+// Store is a free data retrieval call binding the contract method 0x975057e7.
+//
+// Solidity: function store() view returns(address)
+func (_AgentRegistry *AgentRegistryCallerSession) Store() (common.Address, error) {
+	return _AgentRegistry.Contract.Store(&_AgentRegistry.CallOpts)
+}
+
+// Charge is a paid mutator transaction binding the contract method 0xc709a4f1.
+//
+// Solidity: function charge(address wallet, address to, uint256 amount) returns()
+func (_AgentRegistry *AgentRegistryTransactor) Charge(opts *bind.TransactOpts, wallet common.Address, to common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "charge", wallet, to, amount)
+}
+
+// Charge is a paid mutator transaction binding the contract method 0xc709a4f1.
+//
+// Solidity: function charge(address wallet, address to, uint256 amount) returns()
+func (_AgentRegistry *AgentRegistrySession) Charge(wallet common.Address, to common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Charge(&_AgentRegistry.TransactOpts, wallet, to, amount)
+}
+
+// Charge is a paid mutator transaction binding the contract method 0xc709a4f1.
+//
+// Solidity: function charge(address wallet, address to, uint256 amount) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) Charge(wallet common.Address, to common.Address, amount *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Charge(&_AgentRegistry.TransactOpts, wallet, to, amount)
+}
+
 // Deactivate is a paid mutator transaction binding the contract method 0x3ea053eb.
 //
 // Solidity: function deactivate(address wallet) returns()
@@ -514,6 +638,48 @@ func (_AgentRegistry *AgentRegistryTransactorSession) Deactivate(wallet common.A
 	return _AgentRegistry.Contract.Deactivate(&_AgentRegistry.TransactOpts, wallet)
 }
 
+// Initialize is a paid mutator transaction binding the contract method 0x49bc779b.
+//
+// Solidity: function initialize(address store_, uint256 registrationFee_, uint256 registrationBond_, uint256 arbitrationFee_, address admin_, address revenueWallet_, address factory_) returns()
+func (_AgentRegistry *AgentRegistryTransactor) Initialize(opts *bind.TransactOpts, store_ common.Address, registrationFee_ *big.Int, registrationBond_ *big.Int, arbitrationFee_ *big.Int, admin_ common.Address, revenueWallet_ common.Address, factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "initialize", store_, registrationFee_, registrationBond_, arbitrationFee_, admin_, revenueWallet_, factory_)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0x49bc779b.
+//
+// Solidity: function initialize(address store_, uint256 registrationFee_, uint256 registrationBond_, uint256 arbitrationFee_, address admin_, address revenueWallet_, address factory_) returns()
+func (_AgentRegistry *AgentRegistrySession) Initialize(store_ common.Address, registrationFee_ *big.Int, registrationBond_ *big.Int, arbitrationFee_ *big.Int, admin_ common.Address, revenueWallet_ common.Address, factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Initialize(&_AgentRegistry.TransactOpts, store_, registrationFee_, registrationBond_, arbitrationFee_, admin_, revenueWallet_, factory_)
+}
+
+// Initialize is a paid mutator transaction binding the contract method 0x49bc779b.
+//
+// Solidity: function initialize(address store_, uint256 registrationFee_, uint256 registrationBond_, uint256 arbitrationFee_, address admin_, address revenueWallet_, address factory_) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) Initialize(store_ common.Address, registrationFee_ *big.Int, registrationBond_ *big.Int, arbitrationFee_ *big.Int, admin_ common.Address, revenueWallet_ common.Address, factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Initialize(&_AgentRegistry.TransactOpts, store_, registrationFee_, registrationBond_, arbitrationFee_, admin_, revenueWallet_, factory_)
+}
+
+// OnArbiteredBet is a paid mutator transaction binding the contract method 0xdf1d0b3a.
+//
+// Solidity: function onArbiteredBet(address escrow, address yesAgent, address noAgent) returns()
+func (_AgentRegistry *AgentRegistryTransactor) OnArbiteredBet(opts *bind.TransactOpts, escrow common.Address, yesAgent common.Address, noAgent common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "onArbiteredBet", escrow, yesAgent, noAgent)
+}
+
+// OnArbiteredBet is a paid mutator transaction binding the contract method 0xdf1d0b3a.
+//
+// Solidity: function onArbiteredBet(address escrow, address yesAgent, address noAgent) returns()
+func (_AgentRegistry *AgentRegistrySession) OnArbiteredBet(escrow common.Address, yesAgent common.Address, noAgent common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.OnArbiteredBet(&_AgentRegistry.TransactOpts, escrow, yesAgent, noAgent)
+}
+
+// OnArbiteredBet is a paid mutator transaction binding the contract method 0xdf1d0b3a.
+//
+// Solidity: function onArbiteredBet(address escrow, address yesAgent, address noAgent) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) OnArbiteredBet(escrow common.Address, yesAgent common.Address, noAgent common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.OnArbiteredBet(&_AgentRegistry.TransactOpts, escrow, yesAgent, noAgent)
+}
+
 // Register is a paid mutator transaction binding the contract method 0xe8527e38.
 //
 // Solidity: function register(address wallet, address signer, bytes32 policyHash, bytes32 metadataHash) returns()
@@ -533,6 +699,90 @@ func (_AgentRegistry *AgentRegistrySession) Register(wallet common.Address, sign
 // Solidity: function register(address wallet, address signer, bytes32 policyHash, bytes32 metadataHash) returns()
 func (_AgentRegistry *AgentRegistryTransactorSession) Register(wallet common.Address, signer common.Address, policyHash [32]byte, metadataHash [32]byte) (*types.Transaction, error) {
 	return _AgentRegistry.Contract.Register(&_AgentRegistry.TransactOpts, wallet, signer, policyHash, metadataHash)
+}
+
+// Release is a paid mutator transaction binding the contract method 0x19165587.
+//
+// Solidity: function release(address wallet) returns()
+func (_AgentRegistry *AgentRegistryTransactor) Release(opts *bind.TransactOpts, wallet common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "release", wallet)
+}
+
+// Release is a paid mutator transaction binding the contract method 0x19165587.
+//
+// Solidity: function release(address wallet) returns()
+func (_AgentRegistry *AgentRegistrySession) Release(wallet common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Release(&_AgentRegistry.TransactOpts, wallet)
+}
+
+// Release is a paid mutator transaction binding the contract method 0x19165587.
+//
+// Solidity: function release(address wallet) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) Release(wallet common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.Release(&_AgentRegistry.TransactOpts, wallet)
+}
+
+// ReserveTaker is a paid mutator transaction binding the contract method 0x82f81702.
+//
+// Solidity: function reserveTaker(address taker) returns()
+func (_AgentRegistry *AgentRegistryTransactor) ReserveTaker(opts *bind.TransactOpts, taker common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "reserveTaker", taker)
+}
+
+// ReserveTaker is a paid mutator transaction binding the contract method 0x82f81702.
+//
+// Solidity: function reserveTaker(address taker) returns()
+func (_AgentRegistry *AgentRegistrySession) ReserveTaker(taker common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.ReserveTaker(&_AgentRegistry.TransactOpts, taker)
+}
+
+// ReserveTaker is a paid mutator transaction binding the contract method 0x82f81702.
+//
+// Solidity: function reserveTaker(address taker) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) ReserveTaker(taker common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.ReserveTaker(&_AgentRegistry.TransactOpts, taker)
+}
+
+// SetArbitrationFee is a paid mutator transaction binding the contract method 0x5ea7b4fc.
+//
+// Solidity: function setArbitrationFee(uint256 fee) returns()
+func (_AgentRegistry *AgentRegistryTransactor) SetArbitrationFee(opts *bind.TransactOpts, fee *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "setArbitrationFee", fee)
+}
+
+// SetArbitrationFee is a paid mutator transaction binding the contract method 0x5ea7b4fc.
+//
+// Solidity: function setArbitrationFee(uint256 fee) returns()
+func (_AgentRegistry *AgentRegistrySession) SetArbitrationFee(fee *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.SetArbitrationFee(&_AgentRegistry.TransactOpts, fee)
+}
+
+// SetArbitrationFee is a paid mutator transaction binding the contract method 0x5ea7b4fc.
+//
+// Solidity: function setArbitrationFee(uint256 fee) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) SetArbitrationFee(fee *big.Int) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.SetArbitrationFee(&_AgentRegistry.TransactOpts, fee)
+}
+
+// SetFactory is a paid mutator transaction binding the contract method 0x5bb47808.
+//
+// Solidity: function setFactory(address factory_) returns()
+func (_AgentRegistry *AgentRegistryTransactor) SetFactory(opts *bind.TransactOpts, factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "setFactory", factory_)
+}
+
+// SetFactory is a paid mutator transaction binding the contract method 0x5bb47808.
+//
+// Solidity: function setFactory(address factory_) returns()
+func (_AgentRegistry *AgentRegistrySession) SetFactory(factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.SetFactory(&_AgentRegistry.TransactOpts, factory_)
+}
+
+// SetFactory is a paid mutator transaction binding the contract method 0x5bb47808.
+//
+// Solidity: function setFactory(address factory_) returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) SetFactory(factory_ common.Address) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.SetFactory(&_AgentRegistry.TransactOpts, factory_)
 }
 
 // SetRevenueWallet is a paid mutator transaction binding the contract method 0xfb235f34.
@@ -659,6 +909,27 @@ func (_AgentRegistry *AgentRegistrySession) UpdateSigner(wallet common.Address, 
 // Solidity: function updateSigner(address wallet, address signer) returns()
 func (_AgentRegistry *AgentRegistryTransactorSession) UpdateSigner(wallet common.Address, signer common.Address) (*types.Transaction, error) {
 	return _AgentRegistry.Contract.UpdateSigner(&_AgentRegistry.TransactOpts, wallet, signer)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_AgentRegistry *AgentRegistryTransactor) UpgradeToAndCall(opts *bind.TransactOpts, newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _AgentRegistry.contract.Transact(opts, "upgradeToAndCall", newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_AgentRegistry *AgentRegistrySession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.UpgradeToAndCall(&_AgentRegistry.TransactOpts, newImplementation, data)
+}
+
+// UpgradeToAndCall is a paid mutator transaction binding the contract method 0x4f1ef286.
+//
+// Solidity: function upgradeToAndCall(address newImplementation, bytes data) payable returns()
+func (_AgentRegistry *AgentRegistryTransactorSession) UpgradeToAndCall(newImplementation common.Address, data []byte) (*types.Transaction, error) {
+	return _AgentRegistry.Contract.UpgradeToAndCall(&_AgentRegistry.TransactOpts, newImplementation, data)
 }
 
 // AgentRegistryAdminTransferredIterator is returned from FilterAdminTransferred and is used to iterate over the raw logs and unpacked data for AdminTransferred events raised by the AgentRegistry contract.
@@ -1395,6 +1666,294 @@ func (_AgentRegistry *AgentRegistryFilterer) ParseAgentSignerUpdated(log types.L
 	return event, nil
 }
 
+// AgentRegistryArbitrationFeeUpdatedIterator is returned from FilterArbitrationFeeUpdated and is used to iterate over the raw logs and unpacked data for ArbitrationFeeUpdated events raised by the AgentRegistry contract.
+type AgentRegistryArbitrationFeeUpdatedIterator struct {
+	Event *AgentRegistryArbitrationFeeUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryArbitrationFeeUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryArbitrationFeeUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryArbitrationFeeUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryArbitrationFeeUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryArbitrationFeeUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryArbitrationFeeUpdated represents a ArbitrationFeeUpdated event raised by the AgentRegistry contract.
+type AgentRegistryArbitrationFeeUpdated struct {
+	Fee *big.Int
+	Raw types.Log // Blockchain specific contextual infos
+}
+
+// FilterArbitrationFeeUpdated is a free log retrieval operation binding the contract event 0xb1484c2bf00d94a00783b6081ebc5f5d02be4675f6eb8cf4c0c95bfe5a3f06ed.
+//
+// Solidity: event ArbitrationFeeUpdated(uint256 fee)
+func (_AgentRegistry *AgentRegistryFilterer) FilterArbitrationFeeUpdated(opts *bind.FilterOpts) (*AgentRegistryArbitrationFeeUpdatedIterator, error) {
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "ArbitrationFeeUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryArbitrationFeeUpdatedIterator{contract: _AgentRegistry.contract, event: "ArbitrationFeeUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchArbitrationFeeUpdated is a free log subscription operation binding the contract event 0xb1484c2bf00d94a00783b6081ebc5f5d02be4675f6eb8cf4c0c95bfe5a3f06ed.
+//
+// Solidity: event ArbitrationFeeUpdated(uint256 fee)
+func (_AgentRegistry *AgentRegistryFilterer) WatchArbitrationFeeUpdated(opts *bind.WatchOpts, sink chan<- *AgentRegistryArbitrationFeeUpdated) (event.Subscription, error) {
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "ArbitrationFeeUpdated")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryArbitrationFeeUpdated)
+				if err := _AgentRegistry.contract.UnpackLog(event, "ArbitrationFeeUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseArbitrationFeeUpdated is a log parse operation binding the contract event 0xb1484c2bf00d94a00783b6081ebc5f5d02be4675f6eb8cf4c0c95bfe5a3f06ed.
+//
+// Solidity: event ArbitrationFeeUpdated(uint256 fee)
+func (_AgentRegistry *AgentRegistryFilterer) ParseArbitrationFeeUpdated(log types.Log) (*AgentRegistryArbitrationFeeUpdated, error) {
+	event := new(AgentRegistryArbitrationFeeUpdated)
+	if err := _AgentRegistry.contract.UnpackLog(event, "ArbitrationFeeUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// AgentRegistryBondChargedIterator is returned from FilterBondCharged and is used to iterate over the raw logs and unpacked data for BondCharged events raised by the AgentRegistry contract.
+type AgentRegistryBondChargedIterator struct {
+	Event *AgentRegistryBondCharged // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryBondChargedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryBondCharged)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryBondCharged)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryBondChargedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryBondChargedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryBondCharged represents a BondCharged event raised by the AgentRegistry contract.
+type AgentRegistryBondCharged struct {
+	Wallet common.Address
+	To     common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBondCharged is a free log retrieval operation binding the contract event 0x422abfeee0012328b4dd6b71257f61b3dc984217260bf85f4c610558be90ddd9.
+//
+// Solidity: event BondCharged(address indexed wallet, address indexed to, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) FilterBondCharged(opts *bind.FilterOpts, wallet []common.Address, to []common.Address) (*AgentRegistryBondChargedIterator, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "BondCharged", walletRule, toRule)
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryBondChargedIterator{contract: _AgentRegistry.contract, event: "BondCharged", logs: logs, sub: sub}, nil
+}
+
+// WatchBondCharged is a free log subscription operation binding the contract event 0x422abfeee0012328b4dd6b71257f61b3dc984217260bf85f4c610558be90ddd9.
+//
+// Solidity: event BondCharged(address indexed wallet, address indexed to, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) WatchBondCharged(opts *bind.WatchOpts, sink chan<- *AgentRegistryBondCharged, wallet []common.Address, to []common.Address) (event.Subscription, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+	var toRule []interface{}
+	for _, toItem := range to {
+		toRule = append(toRule, toItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "BondCharged", walletRule, toRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryBondCharged)
+				if err := _AgentRegistry.contract.UnpackLog(event, "BondCharged", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBondCharged is a log parse operation binding the contract event 0x422abfeee0012328b4dd6b71257f61b3dc984217260bf85f4c610558be90ddd9.
+//
+// Solidity: event BondCharged(address indexed wallet, address indexed to, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) ParseBondCharged(log types.Log) (*AgentRegistryBondCharged, error) {
+	event := new(AgentRegistryBondCharged)
+	if err := _AgentRegistry.contract.UnpackLog(event, "BondCharged", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // AgentRegistryBondRefundedIterator is returned from FilterBondRefunded and is used to iterate over the raw logs and unpacked data for BondRefunded events raised by the AgentRegistry contract.
 type AgentRegistryBondRefundedIterator struct {
 	Event *AgentRegistryBondRefunded // Event containing the contract specifics and raw log
@@ -1549,6 +2108,296 @@ func (_AgentRegistry *AgentRegistryFilterer) ParseBondRefunded(log types.Log) (*
 	return event, nil
 }
 
+// AgentRegistryBondReleasedIterator is returned from FilterBondReleased and is used to iterate over the raw logs and unpacked data for BondReleased events raised by the AgentRegistry contract.
+type AgentRegistryBondReleasedIterator struct {
+	Event *AgentRegistryBondReleased // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryBondReleasedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryBondReleased)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryBondReleased)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryBondReleasedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryBondReleasedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryBondReleased represents a BondReleased event raised by the AgentRegistry contract.
+type AgentRegistryBondReleased struct {
+	Wallet common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBondReleased is a free log retrieval operation binding the contract event 0x60b8ef4216791426b3d7acfb0b6d11a400872350afd70a3ce5ebf62bea7cb0d4.
+//
+// Solidity: event BondReleased(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) FilterBondReleased(opts *bind.FilterOpts, wallet []common.Address) (*AgentRegistryBondReleasedIterator, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "BondReleased", walletRule)
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryBondReleasedIterator{contract: _AgentRegistry.contract, event: "BondReleased", logs: logs, sub: sub}, nil
+}
+
+// WatchBondReleased is a free log subscription operation binding the contract event 0x60b8ef4216791426b3d7acfb0b6d11a400872350afd70a3ce5ebf62bea7cb0d4.
+//
+// Solidity: event BondReleased(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) WatchBondReleased(opts *bind.WatchOpts, sink chan<- *AgentRegistryBondReleased, wallet []common.Address) (event.Subscription, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "BondReleased", walletRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryBondReleased)
+				if err := _AgentRegistry.contract.UnpackLog(event, "BondReleased", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBondReleased is a log parse operation binding the contract event 0x60b8ef4216791426b3d7acfb0b6d11a400872350afd70a3ce5ebf62bea7cb0d4.
+//
+// Solidity: event BondReleased(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) ParseBondReleased(log types.Log) (*AgentRegistryBondReleased, error) {
+	event := new(AgentRegistryBondReleased)
+	if err := _AgentRegistry.contract.UnpackLog(event, "BondReleased", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// AgentRegistryBondReservedIterator is returned from FilterBondReserved and is used to iterate over the raw logs and unpacked data for BondReserved events raised by the AgentRegistry contract.
+type AgentRegistryBondReservedIterator struct {
+	Event *AgentRegistryBondReserved // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryBondReservedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryBondReserved)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryBondReserved)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryBondReservedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryBondReservedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryBondReserved represents a BondReserved event raised by the AgentRegistry contract.
+type AgentRegistryBondReserved struct {
+	Wallet common.Address
+	Amount *big.Int
+	Raw    types.Log // Blockchain specific contextual infos
+}
+
+// FilterBondReserved is a free log retrieval operation binding the contract event 0xba521e6ccb16052ac552526db8eeca34c80e9bc3364012d209fd8a16387e6396.
+//
+// Solidity: event BondReserved(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) FilterBondReserved(opts *bind.FilterOpts, wallet []common.Address) (*AgentRegistryBondReservedIterator, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "BondReserved", walletRule)
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryBondReservedIterator{contract: _AgentRegistry.contract, event: "BondReserved", logs: logs, sub: sub}, nil
+}
+
+// WatchBondReserved is a free log subscription operation binding the contract event 0xba521e6ccb16052ac552526db8eeca34c80e9bc3364012d209fd8a16387e6396.
+//
+// Solidity: event BondReserved(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) WatchBondReserved(opts *bind.WatchOpts, sink chan<- *AgentRegistryBondReserved, wallet []common.Address) (event.Subscription, error) {
+
+	var walletRule []interface{}
+	for _, walletItem := range wallet {
+		walletRule = append(walletRule, walletItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "BondReserved", walletRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryBondReserved)
+				if err := _AgentRegistry.contract.UnpackLog(event, "BondReserved", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseBondReserved is a log parse operation binding the contract event 0xba521e6ccb16052ac552526db8eeca34c80e9bc3364012d209fd8a16387e6396.
+//
+// Solidity: event BondReserved(address indexed wallet, uint256 amount)
+func (_AgentRegistry *AgentRegistryFilterer) ParseBondReserved(log types.Log) (*AgentRegistryBondReserved, error) {
+	event := new(AgentRegistryBondReserved)
+	if err := _AgentRegistry.contract.UnpackLog(event, "BondReserved", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // AgentRegistryBondSlashedIterator is returned from FilterBondSlashed and is used to iterate over the raw logs and unpacked data for BondSlashed events raised by the AgentRegistry contract.
 type AgentRegistryBondSlashedIterator struct {
 	Event *AgentRegistryBondSlashed // Event containing the contract specifics and raw log
@@ -1688,6 +2537,150 @@ func (_AgentRegistry *AgentRegistryFilterer) WatchBondSlashed(opts *bind.WatchOp
 func (_AgentRegistry *AgentRegistryFilterer) ParseBondSlashed(log types.Log) (*AgentRegistryBondSlashed, error) {
 	event := new(AgentRegistryBondSlashed)
 	if err := _AgentRegistry.contract.UnpackLog(event, "BondSlashed", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// AgentRegistryFactoryUpdatedIterator is returned from FilterFactoryUpdated and is used to iterate over the raw logs and unpacked data for FactoryUpdated events raised by the AgentRegistry contract.
+type AgentRegistryFactoryUpdatedIterator struct {
+	Event *AgentRegistryFactoryUpdated // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryFactoryUpdatedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryFactoryUpdated)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryFactoryUpdated)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryFactoryUpdatedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryFactoryUpdatedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryFactoryUpdated represents a FactoryUpdated event raised by the AgentRegistry contract.
+type AgentRegistryFactoryUpdated struct {
+	Factory common.Address
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterFactoryUpdated is a free log retrieval operation binding the contract event 0x24cd1310c8883cbeaf5b805ab13586ce018b79c022827158ff3e8df14d344936.
+//
+// Solidity: event FactoryUpdated(address indexed factory)
+func (_AgentRegistry *AgentRegistryFilterer) FilterFactoryUpdated(opts *bind.FilterOpts, factory []common.Address) (*AgentRegistryFactoryUpdatedIterator, error) {
+
+	var factoryRule []interface{}
+	for _, factoryItem := range factory {
+		factoryRule = append(factoryRule, factoryItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "FactoryUpdated", factoryRule)
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryFactoryUpdatedIterator{contract: _AgentRegistry.contract, event: "FactoryUpdated", logs: logs, sub: sub}, nil
+}
+
+// WatchFactoryUpdated is a free log subscription operation binding the contract event 0x24cd1310c8883cbeaf5b805ab13586ce018b79c022827158ff3e8df14d344936.
+//
+// Solidity: event FactoryUpdated(address indexed factory)
+func (_AgentRegistry *AgentRegistryFilterer) WatchFactoryUpdated(opts *bind.WatchOpts, sink chan<- *AgentRegistryFactoryUpdated, factory []common.Address) (event.Subscription, error) {
+
+	var factoryRule []interface{}
+	for _, factoryItem := range factory {
+		factoryRule = append(factoryRule, factoryItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "FactoryUpdated", factoryRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryFactoryUpdated)
+				if err := _AgentRegistry.contract.UnpackLog(event, "FactoryUpdated", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseFactoryUpdated is a log parse operation binding the contract event 0x24cd1310c8883cbeaf5b805ab13586ce018b79c022827158ff3e8df14d344936.
+//
+// Solidity: event FactoryUpdated(address indexed factory)
+func (_AgentRegistry *AgentRegistryFilterer) ParseFactoryUpdated(log types.Log) (*AgentRegistryFactoryUpdated, error) {
+	event := new(AgentRegistryFactoryUpdated)
+	if err := _AgentRegistry.contract.UnpackLog(event, "FactoryUpdated", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
@@ -1839,6 +2832,140 @@ func (_AgentRegistry *AgentRegistryFilterer) ParseFeesSwept(log types.Log) (*Age
 	return event, nil
 }
 
+// AgentRegistryInitializedIterator is returned from FilterInitialized and is used to iterate over the raw logs and unpacked data for Initialized events raised by the AgentRegistry contract.
+type AgentRegistryInitializedIterator struct {
+	Event *AgentRegistryInitialized // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryInitializedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryInitialized)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryInitialized)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryInitializedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryInitializedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryInitialized represents a Initialized event raised by the AgentRegistry contract.
+type AgentRegistryInitialized struct {
+	Version uint64
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterInitialized is a free log retrieval operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_AgentRegistry *AgentRegistryFilterer) FilterInitialized(opts *bind.FilterOpts) (*AgentRegistryInitializedIterator, error) {
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryInitializedIterator{contract: _AgentRegistry.contract, event: "Initialized", logs: logs, sub: sub}, nil
+}
+
+// WatchInitialized is a free log subscription operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_AgentRegistry *AgentRegistryFilterer) WatchInitialized(opts *bind.WatchOpts, sink chan<- *AgentRegistryInitialized) (event.Subscription, error) {
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "Initialized")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryInitialized)
+				if err := _AgentRegistry.contract.UnpackLog(event, "Initialized", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseInitialized is a log parse operation binding the contract event 0xc7f505b2f371ae2175ee4913f4499e1f2633a7b5936321eed1cdaeb6115181d2.
+//
+// Solidity: event Initialized(uint64 version)
+func (_AgentRegistry *AgentRegistryFilterer) ParseInitialized(log types.Log) (*AgentRegistryInitialized, error) {
+	event := new(AgentRegistryInitialized)
+	if err := _AgentRegistry.contract.UnpackLog(event, "Initialized", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
 // AgentRegistryRevenueWalletUpdatedIterator is returned from FilterRevenueWalletUpdated and is used to iterate over the raw logs and unpacked data for RevenueWalletUpdated events raised by the AgentRegistry contract.
 type AgentRegistryRevenueWalletUpdatedIterator struct {
 	Event *AgentRegistryRevenueWalletUpdated // Event containing the contract specifics and raw log
@@ -1977,6 +3104,150 @@ func (_AgentRegistry *AgentRegistryFilterer) WatchRevenueWalletUpdated(opts *bin
 func (_AgentRegistry *AgentRegistryFilterer) ParseRevenueWalletUpdated(log types.Log) (*AgentRegistryRevenueWalletUpdated, error) {
 	event := new(AgentRegistryRevenueWalletUpdated)
 	if err := _AgentRegistry.contract.UnpackLog(event, "RevenueWalletUpdated", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// AgentRegistryUpgradedIterator is returned from FilterUpgraded and is used to iterate over the raw logs and unpacked data for Upgraded events raised by the AgentRegistry contract.
+type AgentRegistryUpgradedIterator struct {
+	Event *AgentRegistryUpgraded // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *AgentRegistryUpgradedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(AgentRegistryUpgraded)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(AgentRegistryUpgraded)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *AgentRegistryUpgradedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *AgentRegistryUpgradedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// AgentRegistryUpgraded represents a Upgraded event raised by the AgentRegistry contract.
+type AgentRegistryUpgraded struct {
+	Implementation common.Address
+	Raw            types.Log // Blockchain specific contextual infos
+}
+
+// FilterUpgraded is a free log retrieval operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_AgentRegistry *AgentRegistryFilterer) FilterUpgraded(opts *bind.FilterOpts, implementation []common.Address) (*AgentRegistryUpgradedIterator, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.FilterLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return &AgentRegistryUpgradedIterator{contract: _AgentRegistry.contract, event: "Upgraded", logs: logs, sub: sub}, nil
+}
+
+// WatchUpgraded is a free log subscription operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_AgentRegistry *AgentRegistryFilterer) WatchUpgraded(opts *bind.WatchOpts, sink chan<- *AgentRegistryUpgraded, implementation []common.Address) (event.Subscription, error) {
+
+	var implementationRule []interface{}
+	for _, implementationItem := range implementation {
+		implementationRule = append(implementationRule, implementationItem)
+	}
+
+	logs, sub, err := _AgentRegistry.contract.WatchLogs(opts, "Upgraded", implementationRule)
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(AgentRegistryUpgraded)
+				if err := _AgentRegistry.contract.UnpackLog(event, "Upgraded", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseUpgraded is a log parse operation binding the contract event 0xbc7cd75a20ee27fd9adebab32041f755214dbc6bffa90cc0225b39da2e5c2d3b.
+//
+// Solidity: event Upgraded(address indexed implementation)
+func (_AgentRegistry *AgentRegistryFilterer) ParseUpgraded(log types.Log) (*AgentRegistryUpgraded, error) {
+	event := new(AgentRegistryUpgraded)
+	if err := _AgentRegistry.contract.UnpackLog(event, "Upgraded", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log
