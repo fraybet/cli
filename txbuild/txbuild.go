@@ -29,7 +29,8 @@ func CreateBet(from, factory core.Address, d bets.Draft) (chain.UnsignedTx, erro
 	if err != nil {
 		return chain.UnsignedTx{}, fmt.Errorf("txbuild: factory abi: %w", err)
 	}
-	th := d.TermsHash()
+	// The escrow now stores the descriptive terms and DERIVES termsHash from them
+	// on-chain, so we pass the full terms instead of a precomputed hash.
 	terms := betescrowfactory.BetEscrowTerms{
 		YesAgent:        ethAddr(d.Terms.YesAgent),
 		NoAgent:         ethAddr(d.Terms.NoAgent),
@@ -37,9 +38,13 @@ func CreateBet(from, factory core.Address, d bets.Draft) (chain.UnsignedTx, erro
 		Token:           ethAddr(d.Terms.CollateralToken),
 		YesStake:        d.Terms.YesStake,
 		NoStake:         d.Terms.NoStake,
+		EventTime:       d.Terms.EventTime,
 		ClaimDeadline:   d.Terms.ClaimDeadline,
 		ChallengeWindow: d.Terms.ChallengeWindow,
-		TermsHash:       [32]byte(th),
+		Nonce:           d.Terms.Nonce,
+		Statement:       d.Terms.Statement,
+		PrimarySource:   d.Terms.PrimarySource,
+		FallbackSource:  d.Terms.FallbackSource,
 		Visibility:      uint8(d.Visibility),
 	}
 	data, err := parsed.Pack("create", terms)
