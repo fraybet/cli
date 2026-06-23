@@ -49,7 +49,7 @@ type BetEscrowTerms struct {
 
 // BetEscrowMetaData contains all meta data concerning the BetEscrow contract.
 var BetEscrowMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"t\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"accept\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"agreeOutcome\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"arbiter\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"challenge\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"challengeDeadline\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"challengeWindow\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"claim\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"claimDeadline\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"claimedOutcome\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"disputed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"eventTime\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"fallbackSource\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"finalOutcome\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"finalize\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"fund\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"noAgent\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noAgentAgreed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noFunded\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noStake\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"nonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"primarySource\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIBondRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"resolve\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revoke\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"settled\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"statement\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"status\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Status\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"termsHash\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"token\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"visibility\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"uint8\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"voidUnclaimed\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"yesAgent\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesAgentAgreed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesFunded\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesStake\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"Accepted\",\"inputs\":[{\"name\":\"taker\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Challenged\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Claimed\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"challengeDeadline\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Funded\",\"inputs\":[{\"name\":\"agent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OutcomeAgreed\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Revoked\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Settled\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"WentLive\",\"inputs\":[],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AlreadyFunded\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"AlreadySettled\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"BadTerms\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ChallengeWindowClosed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ChallengeWindowOpen\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidOutcome\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NoArbiter\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotArbiter\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotClaimed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotContested\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotFunding\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotLive\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotOpen\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotParticipant\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotRefundable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ReentrancyGuardReentrantCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"SafeERC20FailedOperation\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"TooEarly\",\"inputs\":[]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"t\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"accept\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"agreeOutcome\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"arbiter\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"challenge\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"challengeDeadline\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"challengeWindow\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"claim\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"claimDeadline\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"claimedOutcome\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"disputed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"eventTime\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint64\",\"internalType\":\"uint64\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"evidenceURI\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"fallbackSource\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"finalOutcome\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"finalize\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"fund\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"noAgent\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noAgentAgreed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noFunded\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"noStake\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"nonce\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"primarySource\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIBondRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"resolve\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"},{\"name\":\"evidenceURI_\",\"type\":\"string\",\"internalType\":\"string\"}],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revoke\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"settled\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"statement\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"string\",\"internalType\":\"string\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"status\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Status\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"termsHash\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bytes32\",\"internalType\":\"bytes32\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"token\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIERC20\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"visibility\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"uint8\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"voidUnclaimed\",\"inputs\":[],\"outputs\":[],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"yesAgent\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesAgentAgreed\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint8\",\"internalType\":\"enumBetEscrow.Outcome\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesFunded\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"bool\",\"internalType\":\"bool\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"yesStake\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"Accepted\",\"inputs\":[{\"name\":\"taker\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"ArbiterResolved\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"evidenceURI\",\"type\":\"string\",\"indexed\":false,\"internalType\":\"string\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Challenged\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Claimed\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"},{\"name\":\"evidenceHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"challengeDeadline\",\"type\":\"uint64\",\"indexed\":false,\"internalType\":\"uint64\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Funded\",\"inputs\":[{\"name\":\"agent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"OutcomeAgreed\",\"inputs\":[{\"name\":\"by\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Revoked\",\"inputs\":[],\"anonymous\":false},{\"type\":\"event\",\"name\":\"Settled\",\"inputs\":[{\"name\":\"outcome\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"enumBetEscrow.Outcome\"}],\"anonymous\":false},{\"type\":\"event\",\"name\":\"WentLive\",\"inputs\":[],\"anonymous\":false},{\"type\":\"error\",\"name\":\"AlreadyFunded\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"AlreadySettled\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"BadTerms\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ChallengeWindowClosed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ChallengeWindowOpen\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ClaimDeadlinePassed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"InvalidOutcome\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NoArbiter\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotArbiter\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotClaimed\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotContested\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotFunding\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotLive\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotOpen\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotParticipant\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotRefundable\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ReentrancyGuardReentrantCall\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"SafeERC20FailedOperation\",\"inputs\":[{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"}]},{\"type\":\"error\",\"name\":\"TooEarly\",\"inputs\":[]}]",
 }
 
 // BetEscrowABI is the input ABI used to generate the binding from.
@@ -444,6 +444,37 @@ func (_BetEscrow *BetEscrowSession) EventTime() (uint64, error) {
 // Solidity: function eventTime() view returns(uint64)
 func (_BetEscrow *BetEscrowCallerSession) EventTime() (uint64, error) {
 	return _BetEscrow.Contract.EventTime(&_BetEscrow.CallOpts)
+}
+
+// EvidenceURI is a free data retrieval call binding the contract method 0xca6f3d28.
+//
+// Solidity: function evidenceURI() view returns(string)
+func (_BetEscrow *BetEscrowCaller) EvidenceURI(opts *bind.CallOpts) (string, error) {
+	var out []interface{}
+	err := _BetEscrow.contract.Call(opts, &out, "evidenceURI")
+
+	if err != nil {
+		return *new(string), err
+	}
+
+	out0 := *abi.ConvertType(out[0], new(string)).(*string)
+
+	return out0, err
+
+}
+
+// EvidenceURI is a free data retrieval call binding the contract method 0xca6f3d28.
+//
+// Solidity: function evidenceURI() view returns(string)
+func (_BetEscrow *BetEscrowSession) EvidenceURI() (string, error) {
+	return _BetEscrow.Contract.EvidenceURI(&_BetEscrow.CallOpts)
+}
+
+// EvidenceURI is a free data retrieval call binding the contract method 0xca6f3d28.
+//
+// Solidity: function evidenceURI() view returns(string)
+func (_BetEscrow *BetEscrowCallerSession) EvidenceURI() (string, error) {
+	return _BetEscrow.Contract.EvidenceURI(&_BetEscrow.CallOpts)
 }
 
 // FallbackSource is a free data retrieval call binding the contract method 0xf698113f.
@@ -1192,25 +1223,25 @@ func (_BetEscrow *BetEscrowTransactorSession) Fund() (*types.Transaction, error)
 	return _BetEscrow.Contract.Fund(&_BetEscrow.TransactOpts)
 }
 
-// Resolve is a paid mutator transaction binding the contract method 0x46ef4788.
+// Resolve is a paid mutator transaction binding the contract method 0xb0c80c0a.
 //
-// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash) returns()
-func (_BetEscrow *BetEscrowTransactor) Resolve(opts *bind.TransactOpts, outcome uint8, evidenceHash [32]byte) (*types.Transaction, error) {
-	return _BetEscrow.contract.Transact(opts, "resolve", outcome, evidenceHash)
+// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash, string evidenceURI_) returns()
+func (_BetEscrow *BetEscrowTransactor) Resolve(opts *bind.TransactOpts, outcome uint8, evidenceHash [32]byte, evidenceURI_ string) (*types.Transaction, error) {
+	return _BetEscrow.contract.Transact(opts, "resolve", outcome, evidenceHash, evidenceURI_)
 }
 
-// Resolve is a paid mutator transaction binding the contract method 0x46ef4788.
+// Resolve is a paid mutator transaction binding the contract method 0xb0c80c0a.
 //
-// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash) returns()
-func (_BetEscrow *BetEscrowSession) Resolve(outcome uint8, evidenceHash [32]byte) (*types.Transaction, error) {
-	return _BetEscrow.Contract.Resolve(&_BetEscrow.TransactOpts, outcome, evidenceHash)
+// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash, string evidenceURI_) returns()
+func (_BetEscrow *BetEscrowSession) Resolve(outcome uint8, evidenceHash [32]byte, evidenceURI_ string) (*types.Transaction, error) {
+	return _BetEscrow.Contract.Resolve(&_BetEscrow.TransactOpts, outcome, evidenceHash, evidenceURI_)
 }
 
-// Resolve is a paid mutator transaction binding the contract method 0x46ef4788.
+// Resolve is a paid mutator transaction binding the contract method 0xb0c80c0a.
 //
-// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash) returns()
-func (_BetEscrow *BetEscrowTransactorSession) Resolve(outcome uint8, evidenceHash [32]byte) (*types.Transaction, error) {
-	return _BetEscrow.Contract.Resolve(&_BetEscrow.TransactOpts, outcome, evidenceHash)
+// Solidity: function resolve(uint8 outcome, bytes32 evidenceHash, string evidenceURI_) returns()
+func (_BetEscrow *BetEscrowTransactorSession) Resolve(outcome uint8, evidenceHash [32]byte, evidenceURI_ string) (*types.Transaction, error) {
+	return _BetEscrow.Contract.Resolve(&_BetEscrow.TransactOpts, outcome, evidenceHash, evidenceURI_)
 }
 
 // Revoke is a paid mutator transaction binding the contract method 0xb6549f75.
@@ -1393,6 +1424,142 @@ func (_BetEscrow *BetEscrowFilterer) WatchAccepted(opts *bind.WatchOpts, sink ch
 func (_BetEscrow *BetEscrowFilterer) ParseAccepted(log types.Log) (*BetEscrowAccepted, error) {
 	event := new(BetEscrowAccepted)
 	if err := _BetEscrow.contract.UnpackLog(event, "Accepted", log); err != nil {
+		return nil, err
+	}
+	event.Raw = log
+	return event, nil
+}
+
+// BetEscrowArbiterResolvedIterator is returned from FilterArbiterResolved and is used to iterate over the raw logs and unpacked data for ArbiterResolved events raised by the BetEscrow contract.
+type BetEscrowArbiterResolvedIterator struct {
+	Event *BetEscrowArbiterResolved // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *BetEscrowArbiterResolvedIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(BetEscrowArbiterResolved)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(BetEscrowArbiterResolved)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *BetEscrowArbiterResolvedIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *BetEscrowArbiterResolvedIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// BetEscrowArbiterResolved represents a ArbiterResolved event raised by the BetEscrow contract.
+type BetEscrowArbiterResolved struct {
+	Outcome      uint8
+	EvidenceHash [32]byte
+	EvidenceURI  string
+	Raw          types.Log // Blockchain specific contextual infos
+}
+
+// FilterArbiterResolved is a free log retrieval operation binding the contract event 0x565df8aa55948feffff27bcda8d240698e6a278c311f8bb1f1c067057667154e.
+//
+// Solidity: event ArbiterResolved(uint8 outcome, bytes32 evidenceHash, string evidenceURI)
+func (_BetEscrow *BetEscrowFilterer) FilterArbiterResolved(opts *bind.FilterOpts) (*BetEscrowArbiterResolvedIterator, error) {
+
+	logs, sub, err := _BetEscrow.contract.FilterLogs(opts, "ArbiterResolved")
+	if err != nil {
+		return nil, err
+	}
+	return &BetEscrowArbiterResolvedIterator{contract: _BetEscrow.contract, event: "ArbiterResolved", logs: logs, sub: sub}, nil
+}
+
+// WatchArbiterResolved is a free log subscription operation binding the contract event 0x565df8aa55948feffff27bcda8d240698e6a278c311f8bb1f1c067057667154e.
+//
+// Solidity: event ArbiterResolved(uint8 outcome, bytes32 evidenceHash, string evidenceURI)
+func (_BetEscrow *BetEscrowFilterer) WatchArbiterResolved(opts *bind.WatchOpts, sink chan<- *BetEscrowArbiterResolved) (event.Subscription, error) {
+
+	logs, sub, err := _BetEscrow.contract.WatchLogs(opts, "ArbiterResolved")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(BetEscrowArbiterResolved)
+				if err := _BetEscrow.contract.UnpackLog(event, "ArbiterResolved", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// ParseArbiterResolved is a log parse operation binding the contract event 0x565df8aa55948feffff27bcda8d240698e6a278c311f8bb1f1c067057667154e.
+//
+// Solidity: event ArbiterResolved(uint8 outcome, bytes32 evidenceHash, string evidenceURI)
+func (_BetEscrow *BetEscrowFilterer) ParseArbiterResolved(log types.Log) (*BetEscrowArbiterResolved, error) {
+	event := new(BetEscrowArbiterResolved)
+	if err := _BetEscrow.contract.UnpackLog(event, "ArbiterResolved", log); err != nil {
 		return nil, err
 	}
 	event.Raw = log

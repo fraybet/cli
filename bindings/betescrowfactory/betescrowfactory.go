@@ -49,7 +49,7 @@ type BetEscrowTerms struct {
 
 // BetEscrowFactoryMetaData contains all meta data concerning the BetEscrowFactory contract.
 var BetEscrowFactoryMetaData = &bind.MetaData{
-	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"allowlist_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"pauseController_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"allowlist\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractStablecoinAllowlist\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"create\",\"inputs\":[{\"name\":\"terms\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]}],\"outputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"pauseController\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractEmergencyPauseController\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIAgentRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"BetCreated\",\"inputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"yesAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"termsHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"uint8\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ProtocolPaused\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TokenNotAllowed\",\"inputs\":[]}]",
+	ABI: "[{\"type\":\"constructor\",\"inputs\":[{\"name\":\"allowlist_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"pauseController_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"revenueWallet_\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"baseFeeBps_\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"registry_\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"allowlist\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractStablecoinAllowlist\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"baseFeeBps\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"uint256\",\"internalType\":\"uint256\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"create\",\"inputs\":[{\"name\":\"terms\",\"type\":\"tuple\",\"internalType\":\"structBetEscrow.Terms\",\"components\":[{\"name\":\"yesAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"arbiter\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"token\",\"type\":\"address\",\"internalType\":\"address\"},{\"name\":\"yesStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"noStake\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"eventTime\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"claimDeadline\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"challengeWindow\",\"type\":\"uint64\",\"internalType\":\"uint64\"},{\"name\":\"nonce\",\"type\":\"uint256\",\"internalType\":\"uint256\"},{\"name\":\"statement\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"primarySource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"fallbackSource\",\"type\":\"string\",\"internalType\":\"string\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"internalType\":\"uint8\"}]}],\"outputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"nonpayable\"},{\"type\":\"function\",\"name\":\"pauseController\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractEmergencyPauseController\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"registry\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"contractIAgentRegistry\"}],\"stateMutability\":\"view\"},{\"type\":\"function\",\"name\":\"revenueWallet\",\"inputs\":[],\"outputs\":[{\"name\":\"\",\"type\":\"address\",\"internalType\":\"address\"}],\"stateMutability\":\"view\"},{\"type\":\"event\",\"name\":\"BetCreated\",\"inputs\":[{\"name\":\"escrow\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"creator\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"yesAgent\",\"type\":\"address\",\"indexed\":true,\"internalType\":\"address\"},{\"name\":\"noAgent\",\"type\":\"address\",\"indexed\":false,\"internalType\":\"address\"},{\"name\":\"termsHash\",\"type\":\"bytes32\",\"indexed\":false,\"internalType\":\"bytes32\"},{\"name\":\"visibility\",\"type\":\"uint8\",\"indexed\":false,\"internalType\":\"uint8\"}],\"anonymous\":false},{\"type\":\"error\",\"name\":\"NotParticipant\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"NotRegistered\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"ProtocolPaused\",\"inputs\":[]},{\"type\":\"error\",\"name\":\"TokenNotAllowed\",\"inputs\":[]}]",
 }
 
 // BetEscrowFactoryABI is the input ABI used to generate the binding from.
@@ -444,6 +444,7 @@ func (it *BetEscrowFactoryBetCreatedIterator) Close() error {
 // BetEscrowFactoryBetCreated represents a BetCreated event raised by the BetEscrowFactory contract.
 type BetEscrowFactoryBetCreated struct {
 	Escrow     common.Address
+	Creator    common.Address
 	YesAgent   common.Address
 	NoAgent    common.Address
 	TermsHash  [32]byte
@@ -451,50 +452,50 @@ type BetEscrowFactoryBetCreated struct {
 	Raw        types.Log // Blockchain specific contextual infos
 }
 
-// FilterBetCreated is a free log retrieval operation binding the contract event 0x551dbb51d8f106c1d3998f4786c5fc3c4bae02b1481f5b407331c566e71d99a2.
+// FilterBetCreated is a free log retrieval operation binding the contract event 0xcc45181b04ca447c9c031a300e33eb15fb4b67e06b120552e0707f3c56cf4735.
 //
-// Solidity: event BetCreated(address indexed escrow, address indexed yesAgent, address indexed noAgent, bytes32 termsHash, uint8 visibility)
-func (_BetEscrowFactory *BetEscrowFactoryFilterer) FilterBetCreated(opts *bind.FilterOpts, escrow []common.Address, yesAgent []common.Address, noAgent []common.Address) (*BetEscrowFactoryBetCreatedIterator, error) {
+// Solidity: event BetCreated(address indexed escrow, address indexed creator, address indexed yesAgent, address noAgent, bytes32 termsHash, uint8 visibility)
+func (_BetEscrowFactory *BetEscrowFactoryFilterer) FilterBetCreated(opts *bind.FilterOpts, escrow []common.Address, creator []common.Address, yesAgent []common.Address) (*BetEscrowFactoryBetCreatedIterator, error) {
 
 	var escrowRule []interface{}
 	for _, escrowItem := range escrow {
 		escrowRule = append(escrowRule, escrowItem)
 	}
+	var creatorRule []interface{}
+	for _, creatorItem := range creator {
+		creatorRule = append(creatorRule, creatorItem)
+	}
 	var yesAgentRule []interface{}
 	for _, yesAgentItem := range yesAgent {
 		yesAgentRule = append(yesAgentRule, yesAgentItem)
 	}
-	var noAgentRule []interface{}
-	for _, noAgentItem := range noAgent {
-		noAgentRule = append(noAgentRule, noAgentItem)
-	}
 
-	logs, sub, err := _BetEscrowFactory.contract.FilterLogs(opts, "BetCreated", escrowRule, yesAgentRule, noAgentRule)
+	logs, sub, err := _BetEscrowFactory.contract.FilterLogs(opts, "BetCreated", escrowRule, creatorRule, yesAgentRule)
 	if err != nil {
 		return nil, err
 	}
 	return &BetEscrowFactoryBetCreatedIterator{contract: _BetEscrowFactory.contract, event: "BetCreated", logs: logs, sub: sub}, nil
 }
 
-// WatchBetCreated is a free log subscription operation binding the contract event 0x551dbb51d8f106c1d3998f4786c5fc3c4bae02b1481f5b407331c566e71d99a2.
+// WatchBetCreated is a free log subscription operation binding the contract event 0xcc45181b04ca447c9c031a300e33eb15fb4b67e06b120552e0707f3c56cf4735.
 //
-// Solidity: event BetCreated(address indexed escrow, address indexed yesAgent, address indexed noAgent, bytes32 termsHash, uint8 visibility)
-func (_BetEscrowFactory *BetEscrowFactoryFilterer) WatchBetCreated(opts *bind.WatchOpts, sink chan<- *BetEscrowFactoryBetCreated, escrow []common.Address, yesAgent []common.Address, noAgent []common.Address) (event.Subscription, error) {
+// Solidity: event BetCreated(address indexed escrow, address indexed creator, address indexed yesAgent, address noAgent, bytes32 termsHash, uint8 visibility)
+func (_BetEscrowFactory *BetEscrowFactoryFilterer) WatchBetCreated(opts *bind.WatchOpts, sink chan<- *BetEscrowFactoryBetCreated, escrow []common.Address, creator []common.Address, yesAgent []common.Address) (event.Subscription, error) {
 
 	var escrowRule []interface{}
 	for _, escrowItem := range escrow {
 		escrowRule = append(escrowRule, escrowItem)
 	}
+	var creatorRule []interface{}
+	for _, creatorItem := range creator {
+		creatorRule = append(creatorRule, creatorItem)
+	}
 	var yesAgentRule []interface{}
 	for _, yesAgentItem := range yesAgent {
 		yesAgentRule = append(yesAgentRule, yesAgentItem)
 	}
-	var noAgentRule []interface{}
-	for _, noAgentItem := range noAgent {
-		noAgentRule = append(noAgentRule, noAgentItem)
-	}
 
-	logs, sub, err := _BetEscrowFactory.contract.WatchLogs(opts, "BetCreated", escrowRule, yesAgentRule, noAgentRule)
+	logs, sub, err := _BetEscrowFactory.contract.WatchLogs(opts, "BetCreated", escrowRule, creatorRule, yesAgentRule)
 	if err != nil {
 		return nil, err
 	}
@@ -526,9 +527,9 @@ func (_BetEscrowFactory *BetEscrowFactoryFilterer) WatchBetCreated(opts *bind.Wa
 	}), nil
 }
 
-// ParseBetCreated is a log parse operation binding the contract event 0x551dbb51d8f106c1d3998f4786c5fc3c4bae02b1481f5b407331c566e71d99a2.
+// ParseBetCreated is a log parse operation binding the contract event 0xcc45181b04ca447c9c031a300e33eb15fb4b67e06b120552e0707f3c56cf4735.
 //
-// Solidity: event BetCreated(address indexed escrow, address indexed yesAgent, address indexed noAgent, bytes32 termsHash, uint8 visibility)
+// Solidity: event BetCreated(address indexed escrow, address indexed creator, address indexed yesAgent, address noAgent, bytes32 termsHash, uint8 visibility)
 func (_BetEscrowFactory *BetEscrowFactoryFilterer) ParseBetCreated(log types.Log) (*BetEscrowFactoryBetCreated, error) {
 	event := new(BetEscrowFactoryBetCreated)
 	if err := _BetEscrowFactory.contract.UnpackLog(event, "BetCreated", log); err != nil {
