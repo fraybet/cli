@@ -49,6 +49,18 @@ func parseOutcome(s string) (bets.Outcome, error) {
 	}
 }
 
+// parseSideYN returns true for YES, false for NO.
+func parseSideYN(s string) (bool, error) {
+	switch strings.ToUpper(strings.TrimSpace(s)) {
+	case "YES":
+		return true, nil
+	case "NO":
+		return false, nil
+	default:
+		return false, fmt.Errorf("--side must be YES or NO, got %q", s)
+	}
+}
+
 func writeJSON(out io.Writer, v any) error {
 	enc := json.NewEncoder(out)
 	enc.SetIndent("", "  ")

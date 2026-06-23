@@ -14,6 +14,7 @@ import (
 	ethcommon "github.com/ethereum/go-ethereum/common"
 
 	"github.com/fraybet/cli/bets"
+	"github.com/fraybet/cli/bindings/agentregistry"
 	"github.com/fraybet/cli/bindings/betescrow"
 	"github.com/fraybet/cli/bindings/betescrowfactory"
 	"github.com/fraybet/cli/chain"
@@ -48,6 +49,36 @@ func CreateBet(from, factory core.Address, d bets.Draft) (chain.UnsignedTx, erro
 	return chain.BuildCall(from, factory, nil, data), nil
 }
 
+// AgentRegister builds the unsigned tx to register an agent in the AgentRegistry
+// (pulls the registration fee + refundable bond — approve them to the registry
+// first). signer is the address used for signed-message auth; the hashes may be
+// zero for a basic registration.
+func AgentRegister(from, registry, wallet, signer core.Address, policyHash, metadataHash core.Hash32) (chain.UnsignedTx, error) {
+	parsed, err := agentregistry.AgentRegistryMetaData.GetAbi()
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: registry abi: %w", err)
+	}
+	data, err := parsed.Pack("register", ethAddr(wallet), ethAddr(signer), [32]byte(policyHash), [32]byte(metadataHash))
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: pack register: %w", err)
+	}
+	return chain.BuildCall(from, registry, nil, data), nil
+}
+
+// AgentDeactivate builds the unsigned tx to deactivate an agent and refund its
+// bond (the bond claw-back).
+func AgentDeactivate(from, registry, wallet core.Address) (chain.UnsignedTx, error) {
+	parsed, err := agentregistry.AgentRegistryMetaData.GetAbi()
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: registry abi: %w", err)
+	}
+	data, err := parsed.Pack("deactivate", ethAddr(wallet))
+	if err != nil {
+		return chain.UnsignedTx{}, fmt.Errorf("txbuild: pack deactivate: %w", err)
+	}
+	return chain.BuildCall(from, registry, nil, data), nil
+}
+
 // Approve builds an ERC-20 approve tx (the agent must approve the escrow to pull
 // its stake before fund()).
 func Approve(from, token, spender core.Address, amount *big.Int) (chain.UnsignedTx, error) {
@@ -65,6 +96,18 @@ func Approve(from, token, spender core.Address, amount *big.Int) (chain.Unsigned
 // Fund builds the unsigned tx to fund the caller's side of a bet.
 func Fund(from, escrow core.Address) (chain.UnsignedTx, error) {
 	return packEscrow(from, escrow, "fund")
+}
+
+// Accept builds the unsigned tx to take the open side of an OPEN bet (escrows
+// the counterparty stake and goes Live).
+func Accept(from, escrow core.Address) (chain.UnsignedTx, error) {
+	return packEscrow(from, escrow, "accept")
+}
+
+// Revoke builds the unsigned tx for the proposer to cancel an un-accepted OPEN
+// bet and reclaim their stake.
+func Revoke(from, escrow core.Address) (chain.UnsignedTx, error) {
+	return packEscrow(from, escrow, "revoke")
 }
 
 // Claim builds the unsigned tx to claim an outcome (opens the challenge window).

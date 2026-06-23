@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"strings"
 
 	"github.com/fraybet/cli/bets"
 	"github.com/fraybet/cli/chain"
@@ -18,9 +19,12 @@ commands:
   clone         clone a public bet's terms for new agents
   propose-link  generate a shareable challenge link (post on X to find a taker)
   accept-link   accept a challenge link as the counterparty -> draft / create tx
-  create        build the unsigned tx to create a bet via the factory
+  propose-open  create an OPEN bet on-chain (your side; the other side open)
+  create        build the unsigned tx to create a bilateral bet via the factory
   approve     build the unsigned ERC-20 approve tx (before funding)
   fund        build the unsigned tx to fund your side
+  accept      take the open side of an OPEN bet (escrows your stake -> Live)
+  revoke      cancel your un-accepted OPEN bet and reclaim your stake
   claim       build the unsigned tx to claim YES/NO
   challenge   build the unsigned tx to challenge a claim
   finalize    build the unsigned tx to finalize an unchallenged claim
@@ -48,9 +52,11 @@ func runBet(args []string, out io.Writer) error {
 		return betAcceptLink(rest, out)
 	case "create":
 		return betCreate(rest, out)
+	case "propose-open":
+		return betProposeOpen(rest, out)
 	case "approve":
 		return betApprove(rest, out)
-	case "fund", "challenge", "finalize", "void":
+	case "fund", "challenge", "finalize", "void", "accept", "revoke":
 		return betSimpleAction(cmd, rest, out)
 	case "claim":
 		return betClaim(rest, out)
@@ -247,6 +253,98 @@ func betApprove(args []string, out io.Writer) error {
 	return writeUnsignedTx(out, "approve", tx, "")
 }
 
+// betProposeOpen builds the unsigned tx to create an OPEN bet: the proposer takes
+// one side, the other is left open for any taker to accept().
+func betProposeOpen(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("propose-open", flag.ContinueOnError)
+	fs.SetOutput(out)
+	from := fs.String("from", "", "tx sender (defaults to --proposer)")
+	proposer := fs.String("proposer", "", "your wallet address (the side you take)")
+	side := fs.String("side", "", "the side YOU take: YES or NO")
+	token := fs.String("token", defaultUSDC, "collateral token address")
+	stake := fs.String("stake", "", "your stake in base units (USDC 6dp)")
+	counterStake := fs.String("counter-stake", "", "the taker's stake (default: match yours)")
+	statement := fs.String("statement", "", "the bet statement")
+	source := fs.String("source", "", "primary resolution source")
+	fallback := fs.String("fallback", "", "fallback resolution source")
+	eventTime := fs.Uint64("event-time", 0, "event time (unix seconds)")
+	claimDeadline := fs.Uint64("claim-deadline", 0, "claim deadline (unix; default event+24h)")
+	challengeWindow := fs.Uint64("challenge-window", 0, "challenge window seconds (default 24h)")
+	arbiter := fs.String("arbiter", "", "arbiter address (optional; enables disputes)")
+	nonce := fs.String("nonce", "0", "disambiguation nonce")
+	public := fs.Bool("public", false, "mark the bet public (discoverable)")
+	factory := fs.String("factory", defaultFactory, "BetEscrowFactory address")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	proposerA, err := parseAddr(*proposer, "proposer")
+	if err != nil {
+		return err
+	}
+	proposerYes, err := parseSideYN(*side)
+	if err != nil {
+		return err
+	}
+	tokenA, err := parseAddr(*token, "token")
+	if err != nil {
+		return err
+	}
+	stakeB, err := parseBig(*stake, "stake")
+	if err != nil {
+		return err
+	}
+	nonceB, err := parseBig(*nonce, "nonce")
+	if err != nil {
+		return err
+	}
+	arbA, err := parseOptAddr(*arbiter)
+	if err != nil {
+		return err
+	}
+	csB := stakeB
+	if strings.TrimSpace(*counterStake) != "" {
+		if csB, err = parseBig(*counterStake, "counter-stake"); err != nil {
+			return err
+		}
+	}
+	fromStr := *from
+	if strings.TrimSpace(fromStr) == "" {
+		fromStr = *proposer
+	}
+	fromA, err := parseAddr(fromStr, "from")
+	if err != nil {
+		return err
+	}
+	factoryA, err := parseAddr(*factory, "factory")
+	if err != nil {
+		return err
+	}
+	vis := core.VisibilityPrivate
+	if *public {
+		vis = core.VisibilityPublic
+	}
+	in := bets.DraftInput{
+		CollateralToken: tokenA, Arbiter: arbA, Statement: *statement,
+		PrimarySource: *source, FallbackSource: *fallback,
+		EventTime: *eventTime, ClaimDeadline: *claimDeadline, ChallengeWindow: *challengeWindow,
+		Nonce: nonceB, Visibility: vis,
+	}
+	if proposerYes {
+		in.YesAgent, in.YesStake, in.NoStake = proposerA, stakeB, csB
+	} else {
+		in.NoAgent, in.NoStake, in.YesStake = proposerA, stakeB, csB
+	}
+	d, err := bets.NewOpenDraft(in, proposerYes)
+	if err != nil {
+		return err
+	}
+	tx, err := txbuild.CreateBet(fromA, factoryA, d)
+	if err != nil {
+		return err
+	}
+	return writeUnsignedTx(out, "create open bet", tx, d.TermsHash().Hex())
+}
+
 func betSimpleAction(action string, args []string, out io.Writer) error {
 	fs := flag.NewFlagSet(action, flag.ContinueOnError)
 	fs.SetOutput(out)
@@ -273,6 +371,10 @@ func betSimpleAction(action string, args []string, out io.Writer) error {
 		tx, err = txbuild.Finalize(fromA, escrowA)
 	case "void":
 		tx, err = txbuild.VoidUnclaimed(fromA, escrowA)
+	case "accept":
+		tx, err = txbuild.Accept(fromA, escrowA)
+	case "revoke":
+		tx, err = txbuild.Revoke(fromA, escrowA)
 	}
 	if err != nil {
 		return err

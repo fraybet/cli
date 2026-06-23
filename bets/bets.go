@@ -136,6 +136,52 @@ func NewDraft(in DraftInput) (Draft, error) {
 	return Draft{Terms: terms, Visibility: in.Visibility}, nil
 }
 
+// NewOpenDraft builds a validated OPEN bet: the proposer takes one side and the
+// other is left open (address(0)), filled later by accept(). proposerYes places
+// the proposer on the YES side (NO open); otherwise the YES side is open. The
+// proposer's address comes from the matching agent field of the input.
+func NewOpenDraft(in DraftInput, proposerYes bool) (Draft, error) {
+	cw := in.ChallengeWindow
+	if cw == 0 {
+		cw = DefaultChallengeWindow
+	}
+	cd := in.ClaimDeadline
+	if cd == 0 && in.EventTime != 0 {
+		cd = in.EventTime + DefaultClaimGrace
+	}
+	nonce := in.Nonce
+	if nonce == nil {
+		nonce = big.NewInt(0)
+	}
+
+	yes, no := in.YesAgent, in.NoAgent
+	if proposerYes {
+		no = core.Address{} // open NO side
+	} else {
+		yes = core.Address{} // open YES side
+	}
+
+	terms := core.BetTerms{
+		YesAgent:        yes,
+		NoAgent:         no,
+		CollateralToken: in.CollateralToken,
+		YesStake:        in.YesStake,
+		NoStake:         in.NoStake,
+		Statement:       in.Statement,
+		EventTime:       in.EventTime,
+		ClaimDeadline:   cd,
+		ChallengeWindow: cw,
+		PrimarySource:   in.PrimarySource,
+		FallbackSource:  in.FallbackSource,
+		Arbiter:         in.Arbiter,
+		Nonce:           nonce,
+	}
+	if err := terms.ValidateOpen(); err != nil {
+		return Draft{}, fmt.Errorf("bets: invalid open draft: %w", err)
+	}
+	return Draft{Terms: terms, Visibility: in.Visibility}, nil
+}
+
 // TermsHash is the canonical bet identifier (EIP-712 struct hash).
 func (d Draft) TermsHash() core.Hash32 { return d.Terms.TermsHash() }
 

@@ -12,8 +12,7 @@ var zeroAddress Address
 // bet can be hashed and created. These are conservative, explicit checks — we
 // err toward rejecting ambiguous terms rather than letting them on-chain.
 func (t BetTerms) Validate() error {
-	var errs []error
-
+	errs := []error{}
 	if t.YesAgent == zeroAddress {
 		errs = append(errs, errors.New("yesAgent is the zero address"))
 	}
@@ -23,6 +22,31 @@ func (t BetTerms) Validate() error {
 	if t.YesAgent == t.NoAgent && t.YesAgent != zeroAddress {
 		errs = append(errs, errors.New("yesAgent and noAgent must be different"))
 	}
+	errs = append(errs, t.validateBase()...)
+	return errors.Join(errs...)
+}
+
+// ValidateOpen checks an OPEN bet's terms: exactly one of yes/no agent is the
+// zero address (the open side, filled later by accept()); the proposer's side is
+// set; everything else matches Validate.
+func (t BetTerms) ValidateOpen() error {
+	errs := []error{}
+	openYes := t.YesAgent == zeroAddress
+	openNo := t.NoAgent == zeroAddress
+	if openYes && openNo {
+		errs = append(errs, errors.New("open bet: both agents are zero (the proposer's side must be set)"))
+	}
+	if !openYes && !openNo {
+		errs = append(errs, errors.New("open bet: neither side is open — use a bilateral draft instead"))
+	}
+	errs = append(errs, t.validateBase()...)
+	return errors.Join(errs...)
+}
+
+// validateBase covers everything except agent presence/distinctness (shared by
+// Validate and ValidateOpen).
+func (t BetTerms) validateBase() []error {
+	var errs []error
 	if t.CollateralToken == zeroAddress {
 		errs = append(errs, errors.New("collateralToken is the zero address"))
 	}
@@ -44,7 +68,6 @@ func (t BetTerms) Validate() error {
 	if t.ClaimDeadline == 0 {
 		errs = append(errs, errors.New("claimDeadline is unset"))
 	}
-	// The claim deadline must come at or after the event it settles.
 	if t.EventTime != 0 && t.ClaimDeadline != 0 && t.ClaimDeadline < t.EventTime {
 		errs = append(errs, fmt.Errorf("claimDeadline (%d) precedes eventTime (%d)", t.ClaimDeadline, t.EventTime))
 	}
@@ -54,8 +77,7 @@ func (t BetTerms) Validate() error {
 	if t.Nonce == nil {
 		errs = append(errs, errors.New("nonce is nil (needed to disambiguate otherwise-identical terms)"))
 	}
-
-	return errors.Join(errs...)
+	return errs
 }
 
 func positive(x *big.Int) bool { return x != nil && x.Sign() > 0 }
