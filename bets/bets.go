@@ -129,6 +129,7 @@ func NewDraft(in DraftInput) (Draft, error) {
 		FallbackSource:  in.FallbackSource,
 		Arbiter:         in.Arbiter,
 		Nonce:           nonce,
+		Visibility:      uint8(in.Visibility),
 	}
 	if err := terms.Validate(); err != nil {
 		return Draft{}, fmt.Errorf("bets: invalid draft: %w", err)
@@ -175,6 +176,7 @@ func NewOpenDraft(in DraftInput, proposerYes bool) (Draft, error) {
 		FallbackSource:  in.FallbackSource,
 		Arbiter:         in.Arbiter,
 		Nonce:           nonce,
+		Visibility:      uint8(in.Visibility),
 	}
 	if err := terms.ValidateOpen(); err != nil {
 		return Draft{}, fmt.Errorf("bets: invalid open draft: %w", err)
@@ -197,6 +199,7 @@ func Clone(src core.BetTerms, yesAgent, noAgent core.Address, nonce *big.Int, vi
 	t.YesAgent = yesAgent
 	t.NoAgent = noAgent
 	t.Nonce = nonce
+	t.Visibility = uint8(visibility) // the clone's visibility is bound into its hash
 	if err := t.Validate(); err != nil {
 		return Draft{}, fmt.Errorf("bets: invalid clone: %w", err)
 	}

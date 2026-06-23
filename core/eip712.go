@@ -109,13 +109,14 @@ type BetTerms struct {
 	FallbackSource  string
 	Arbiter         Address
 	Nonce           *big.Int
+	Visibility      uint8 // bound into the hash so a signature commits to public/private
 }
 
 const betTermsType = "BetTerms(" +
 	"address yesAgent,address noAgent,address collateralToken," +
 	"uint256 yesStake,uint256 noStake,string statement," +
 	"uint256 eventTime,uint256 claimDeadline,uint256 challengeWindow," +
-	"string primarySource,string fallbackSource,address arbiter,uint256 nonce)"
+	"string primarySource,string fallbackSource,address arbiter,uint256 nonce,uint8 visibility)"
 
 // BetTermsTypeHash is the EIP-712 type hash for BetTerms.
 var BetTermsTypeHash = keccak256([]byte(betTermsType))
@@ -137,6 +138,7 @@ func (t BetTerms) StructHash() Hash32 {
 		encodeString(t.FallbackSource),
 		encodeAddress(t.Arbiter),
 		encodeUint(t.Nonce),
+		encodeUint64(uint64(t.Visibility)),
 	)
 }
 

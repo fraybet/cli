@@ -39,6 +39,7 @@ type parityVector struct {
 		FallbackSource  string `json:"fallbackSource"`
 		Arbiter         string `json:"arbiter"`
 		Nonce           string `json:"nonce"`
+		Visibility      uint8  `json:"visibility"`
 	} `json:"terms"`
 	TermsHash string `json:"termsHash"`
 	Digest    string `json:"digest"`
@@ -60,6 +61,7 @@ func (v parityVector) toTerms(t *testing.T) BetTerms {
 		FallbackSource:  v.Terms.FallbackSource,
 		Arbiter:         MustHexToAddress(v.Terms.Arbiter),
 		Nonce:           mustBig(t, v.Terms.Nonce),
+		Visibility:      v.Terms.Visibility,
 	}
 }
 
