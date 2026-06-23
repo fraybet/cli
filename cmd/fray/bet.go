@@ -30,8 +30,10 @@ commands:
   finalize    build the unsigned tx to finalize an unchallenged claim
   void        build the unsigned tx to refund an unclaimed, expired bet
 
-All tx commands return UNSIGNED transactions — sign and broadcast with your
-own wallet. The platform never signs or holds keys.
+tx commands sign with your default wallet and broadcast to Base mainnet.
+Override the signer with --wallet <name> / --account <n>, the chain with --rpc,
+or print the UNSIGNED tx (sign it elsewhere) with --unsigned. Keys are yours,
+held locally — the platform never signs or holds them.
 `
 
 // runBet dispatches `fray bet <cmd>`.
@@ -150,14 +152,10 @@ func betDraft(args []string, out io.Writer) error {
 func betCreate(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("create", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "creator address (tx sender)")
-	factory := fs.String("factory", "", "BetEscrowFactory address")
+	factory := fs.String("factory", defaultFactory, "BetEscrowFactory address")
 	build := draftFlags(fs)
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
 		return err
 	}
 	factoryA, err := parseAddr(*factory, "factory")
@@ -172,11 +170,9 @@ func betCreate(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.CreateBet(fromA, factoryA, d)
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, "create bet", tx, d.TermsHash().Hex())
+	return sf.run(out, "create bet", d.TermsHash().Hex(), func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.CreateBet(from, factoryA, d)
+	})
 }
 
 func betClone(args []string, out io.Writer) error {
@@ -223,15 +219,11 @@ func betClone(args []string, out io.Writer) error {
 func betApprove(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("approve", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "approver address")
-	token := fs.String("token", "", "token address")
-	spender := fs.String("spender", "", "spender (escrow) address")
+	token := fs.String("token", defaultUSDC, "token address")
+	spender := fs.String("spender", "", "spender address (e.g. an escrow or the registry)")
 	amount := fs.String("amount", "", "amount in base units")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
 		return err
 	}
 	tokenA, err := parseAddr(*token, "token")
@@ -246,11 +238,9 @@ func betApprove(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.Approve(fromA, tokenA, spenderA, amt)
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, "approve", tx, "")
+	return sf.run(out, "approve", "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.Approve(from, tokenA, spenderA, amt)
+	})
 }
 
 // betProposeOpen builds the unsigned tx to create an OPEN bet: the proposer takes
@@ -258,8 +248,6 @@ func betApprove(args []string, out io.Writer) error {
 func betProposeOpen(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("propose-open", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "tx sender (defaults to --proposer)")
-	proposer := fs.String("proposer", "", "your wallet address (the side you take)")
 	side := fs.String("side", "", "the side YOU take: YES or NO")
 	token := fs.String("token", defaultUSDC, "collateral token address")
 	stake := fs.String("stake", "", "your stake in base units (USDC 6dp)")
@@ -274,11 +262,8 @@ func betProposeOpen(args []string, out io.Writer) error {
 	nonce := fs.String("nonce", "0", "disambiguation nonce")
 	public := fs.Bool("public", false, "mark the bet public (discoverable)")
 	factory := fs.String("factory", defaultFactory, "BetEscrowFactory address")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	proposerA, err := parseAddr(*proposer, "proposer")
-	if err != nil {
 		return err
 	}
 	proposerYes, err := parseSideYN(*side)
@@ -307,14 +292,6 @@ func betProposeOpen(args []string, out io.Writer) error {
 			return err
 		}
 	}
-	fromStr := *from
-	if strings.TrimSpace(fromStr) == "" {
-		fromStr = *proposer
-	}
-	fromA, err := parseAddr(fromStr, "from")
-	if err != nil {
-		return err
-	}
 	factoryA, err := parseAddr(*factory, "factory")
 	if err != nil {
 		return err
@@ -323,6 +300,10 @@ func betProposeOpen(args []string, out io.Writer) error {
 	if *public {
 		vis = core.VisibilityPublic
 	}
+	w, err := sf.resolve() // the proposer is the signing wallet
+	if err != nil {
+		return err
+	}
 	in := bets.DraftInput{
 		CollateralToken: tokenA, Arbiter: arbA, Statement: *statement,
 		PrimarySource: *source, FallbackSource: *fallback,
@@ -330,70 +311,60 @@ func betProposeOpen(args []string, out io.Writer) error {
 		Nonce: nonceB, Visibility: vis,
 	}
 	if proposerYes {
-		in.YesAgent, in.YesStake, in.NoStake = proposerA, stakeB, csB
+		in.YesAgent, in.YesStake, in.NoStake = w.Address, stakeB, csB
 	} else {
-		in.NoAgent, in.NoStake, in.YesStake = proposerA, stakeB, csB
+		in.NoAgent, in.NoStake, in.YesStake = w.Address, stakeB, csB
 	}
 	d, err := bets.NewOpenDraft(in, proposerYes)
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.CreateBet(fromA, factoryA, d)
+	tx, err := txbuild.CreateBet(w.Address, factoryA, d)
 	if err != nil {
 		return err
 	}
-	return writeUnsignedTx(out, "create open bet", tx, d.TermsHash().Hex())
+	return sf.emit(out, "create open bet", d.TermsHash().Hex(), tx, w)
 }
 
 func betSimpleAction(action string, args []string, out io.Writer) error {
 	fs := flag.NewFlagSet(action, flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "tx sender")
 	escrow := fs.String("escrow", "", "BetEscrow address")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
 		return err
 	}
 	escrowA, err := parseAddr(*escrow, "escrow")
 	if err != nil {
 		return err
 	}
-	var tx chain.UnsignedTx
-	switch action {
-	case "fund":
-		tx, err = txbuild.Fund(fromA, escrowA)
-	case "challenge":
-		tx, err = txbuild.Challenge(fromA, escrowA)
-	case "finalize":
-		tx, err = txbuild.Finalize(fromA, escrowA)
-	case "void":
-		tx, err = txbuild.VoidUnclaimed(fromA, escrowA)
-	case "accept":
-		tx, err = txbuild.Accept(fromA, escrowA)
-	case "revoke":
-		tx, err = txbuild.Revoke(fromA, escrowA)
-	}
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, action, tx, "")
+	return sf.run(out, action, "", func(from core.Address) (chain.UnsignedTx, error) {
+		switch action {
+		case "fund":
+			return txbuild.Fund(from, escrowA)
+		case "challenge":
+			return txbuild.Challenge(from, escrowA)
+		case "finalize":
+			return txbuild.Finalize(from, escrowA)
+		case "void":
+			return txbuild.VoidUnclaimed(from, escrowA)
+		case "accept":
+			return txbuild.Accept(from, escrowA)
+		case "revoke":
+			return txbuild.Revoke(from, escrowA)
+		}
+		return chain.UnsignedTx{}, fmt.Errorf("unknown action %q", action)
+	})
 }
 
 func betClaim(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("claim", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "tx sender")
 	escrow := fs.String("escrow", "", "BetEscrow address")
 	outcome := fs.String("outcome", "", "YES or NO")
 	evidence := fs.String("evidence-hash", "0x0000000000000000000000000000000000000000000000000000000000000000", "evidence hash (bytes32)")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
 		return err
 	}
 	escrowA, err := parseAddr(*escrow, "escrow")
@@ -408,9 +379,7 @@ func betClaim(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.Claim(fromA, escrowA, o, ev)
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, "claim "+o.String(), tx, "")
+	return sf.run(out, "claim "+o.String(), "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.Claim(from, escrowA, o, ev)
+	})
 }

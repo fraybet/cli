@@ -7,7 +7,24 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/fraybet/cli/wallet"
 )
+
+// testKeystore creates a temp keystore with one wallet named "test" and returns
+// the --keystore flag pair so tx commands can resolve a signer offline.
+func testKeystore(t *testing.T) []string {
+	t.Helper()
+	dir := t.TempDir()
+	st, err := wallet.NewStore(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := st.Create("test"); err != nil {
+		t.Fatal(err)
+	}
+	return []string{"--keystore", dir, "--wallet", "test", "--unsigned"}
+}
 
 const (
 	addrYes     = "0x1111111111111111111111111111111111111111"
@@ -58,7 +75,8 @@ func TestBetDraftRejectsMissingAgent(t *testing.T) {
 
 func TestBetCreateProducesUnsignedTx(t *testing.T) {
 	var buf bytes.Buffer
-	args := append([]string{"create", "--from", addrYes, "--factory", addrFactory}, draftArgs()...)
+	args := append([]string{"create", "--factory", addrFactory}, draftArgs()...)
+	args = append(args, testKeystore(t)...)
 	if err := runBet(args, &buf); err != nil {
 		t.Fatalf("create: %v", err)
 	}
@@ -76,7 +94,8 @@ func TestBetCreateProducesUnsignedTx(t *testing.T) {
 
 func TestBetClaim(t *testing.T) {
 	var buf bytes.Buffer
-	err := runBet([]string{"claim", "--from", addrYes, "--escrow", addrEscrow, "--outcome", "YES"}, &buf)
+	args := append([]string{"claim", "--escrow", addrEscrow, "--outcome", "YES"}, testKeystore(t)...)
+	err := runBet(args, &buf)
 	if err != nil {
 		t.Fatalf("claim: %v", err)
 	}
@@ -89,7 +108,8 @@ func TestBetClaim(t *testing.T) {
 
 func TestBetFund(t *testing.T) {
 	var buf bytes.Buffer
-	if err := runBet([]string{"fund", "--from", addrYes, "--escrow", addrEscrow}, &buf); err != nil {
+	args := append([]string{"fund", "--escrow", addrEscrow}, testKeystore(t)...)
+	if err := runBet(args, &buf); err != nil {
 		t.Fatalf("fund: %v", err)
 	}
 }

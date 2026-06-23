@@ -6,6 +6,7 @@ import (
 	"io"
 	"strings"
 
+	"github.com/fraybet/cli/chain"
 	"github.com/fraybet/cli/core"
 	"github.com/fraybet/cli/txbuild"
 )
@@ -44,33 +45,13 @@ func runAgent(args []string, out io.Writer) error {
 func agentRegister(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("register", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "tx sender / principal (pays fee + bond)")
-	wallet := fs.String("wallet", "", "agent wallet to register (default: --from)")
-	signer := fs.String("signer", "", "signing key for message auth (default: --wallet)")
+	agent := fs.String("agent", "", "agent wallet to register (default: the signing wallet)")
+	signer := fs.String("signer", "", "signing key for message auth (default: --agent)")
 	registry := fs.String("registry", defaultRegistry, "AgentRegistry address")
 	policy := fs.String("policy-hash", "", "policy hash (bytes32; default zero)")
 	metadata := fs.String("metadata-hash", "", "metadata hash (bytes32; default zero)")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
-		return err
-	}
-	walletStr := *wallet
-	if strings.TrimSpace(walletStr) == "" {
-		walletStr = *from
-	}
-	walletA, err := parseAddr(walletStr, "wallet")
-	if err != nil {
-		return err
-	}
-	signerStr := *signer
-	if strings.TrimSpace(signerStr) == "" {
-		signerStr = walletStr
-	}
-	signerA, err := parseAddr(signerStr, "signer")
-	if err != nil {
 		return err
 	}
 	registryA, err := parseAddr(*registry, "registry")
@@ -85,43 +66,45 @@ func agentRegister(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.AgentRegister(fromA, registryA, walletA, signerA, policyH, metaH)
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, "register agent", tx, "")
+	return sf.run(out, "register agent", "", func(from core.Address) (chain.UnsignedTx, error) {
+		agentA := from
+		if strings.TrimSpace(*agent) != "" {
+			if agentA, err = parseAddr(*agent, "agent"); err != nil {
+				return chain.UnsignedTx{}, err
+			}
+		}
+		signerA := agentA
+		if strings.TrimSpace(*signer) != "" {
+			if signerA, err = parseAddr(*signer, "signer"); err != nil {
+				return chain.UnsignedTx{}, err
+			}
+		}
+		return txbuild.AgentRegister(from, registryA, agentA, signerA, policyH, metaH)
+	})
 }
 
 func agentDeactivate(args []string, out io.Writer) error {
 	fs := flag.NewFlagSet("deactivate", flag.ContinueOnError)
 	fs.SetOutput(out)
-	from := fs.String("from", "", "tx sender (the agent owner)")
-	wallet := fs.String("wallet", "", "agent wallet to deactivate (default: --from)")
+	agent := fs.String("agent", "", "agent wallet to deactivate (default: the signing wallet)")
 	registry := fs.String("registry", defaultRegistry, "AgentRegistry address")
+	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	fromA, err := parseAddr(*from, "from")
-	if err != nil {
-		return err
-	}
-	walletStr := *wallet
-	if strings.TrimSpace(walletStr) == "" {
-		walletStr = *from
-	}
-	walletA, err := parseAddr(walletStr, "wallet")
-	if err != nil {
 		return err
 	}
 	registryA, err := parseAddr(*registry, "registry")
 	if err != nil {
 		return err
 	}
-	tx, err := txbuild.AgentDeactivate(fromA, registryA, walletA)
-	if err != nil {
-		return err
-	}
-	return writeUnsignedTx(out, "deactivate agent (refund bond)", tx, "")
+	return sf.run(out, "deactivate agent (refund bond)", "", func(from core.Address) (chain.UnsignedTx, error) {
+		agentA := from
+		if strings.TrimSpace(*agent) != "" {
+			if agentA, err = parseAddr(*agent, "agent"); err != nil {
+				return chain.UnsignedTx{}, err
+			}
+		}
+		return txbuild.AgentDeactivate(from, registryA, agentA)
+	})
 }
 
 // optHash32 parses a bytes32 hex, defaulting to the zero hash when empty.

@@ -20,13 +20,16 @@ const walletUsage = `fray wallet <command> [flags]
 commands:
   new       generate a new HD wallet (BIP-39 seed phrase; prints address + phrase)
   import    recreate a wallet from a seed phrase (--mnemonic)
-  list      list wallet names in the keystore
+  list      list wallet names ( * marks the default )
+  use       set the default wallet — tx commands act as it unless --wallet is given
   address   print a wallet's address
   balance   print a wallet's native (ETH) balance  (--rpc required)
   export    print a wallet's PRIVATE KEY (for e.g. forge --private-key)
 
 Keys live under --keystore (default ~/.agentbet/wallets), one file per wallet,
 unencrypted (dev-grade). The platform is non-custodial: these keys are yours.
+Commands act as the default wallet (set with `+"`fray wallet use <name>`"+`); pick a
+different HD account within a wallet with --account <n>.
 `
 
 // defaultKeystore is ~/.agentbet/wallets, overridable with --keystore.
@@ -51,6 +54,8 @@ func runWallet(args []string, out io.Writer) error {
 		return walletImport(rest, out)
 	case "list":
 		return walletList(rest, out)
+	case "use":
+		return walletUse(rest, out)
 	case "address":
 		return walletAddress(rest, out)
 	case "balance":
@@ -151,14 +156,46 @@ func walletList(args []string, out io.Writer) error {
 		fmt.Fprintln(out, "(no wallets)")
 		return nil
 	}
+	def, _ := st.Default()
 	for _, n := range names {
+		marker := "  "
+		if n == def {
+			marker = "* " // the default wallet
+		}
 		w, err := st.Load(n)
 		if err != nil {
-			fmt.Fprintf(out, "%s\t(error: %v)\n", n, err)
+			fmt.Fprintf(out, "%s%s\t(error: %v)\n", marker, n, err)
 			continue
 		}
-		fmt.Fprintf(out, "%s\t%s\n", n, w.Address.Hex())
+		fmt.Fprintf(out, "%s%s\t%s\n", marker, n, w.Address.Hex())
 	}
+	return nil
+}
+
+// walletUse sets the default wallet that commands act as when --wallet is omitted.
+func walletUse(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("use", flag.ContinueOnError)
+	fs.SetOutput(out)
+	keystore := fs.String("keystore", "", "keystore dir")
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	rest := fs.Args()
+	if len(rest) != 1 {
+		return fmt.Errorf("usage: fray wallet use <name>")
+	}
+	st, err := openStore(*keystore)
+	if err != nil {
+		return err
+	}
+	if err := st.SetDefault(rest[0]); err != nil {
+		return err
+	}
+	w, err := st.Load(rest[0])
+	if err != nil {
+		return err
+	}
+	fmt.Fprintf(out, "default wallet: %s (%s)\n", w.Name, w.Address.Hex())
 	return nil
 }
 

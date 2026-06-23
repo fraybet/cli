@@ -21,11 +21,13 @@ import (
 )
 
 // Wallet is an agent's self-custodied key (derived from an HD seed phrase, or a
-// legacy raw key). Mnemonic is set only for HD wallets.
+// legacy raw key). Mnemonic is set only for HD wallets. Account is the HD
+// derivation index (m/44'/60'/0'/0/Account); 0 is the default account.
 type Wallet struct {
 	Name     string
 	Address  core.Address
 	Mnemonic string // empty for legacy raw-hex wallets
+	Account  uint32
 	privHex  string
 }
 
@@ -59,9 +61,9 @@ func deriveKey(mnemonic string, index uint32) (string, error) {
 	return fmt.Sprintf("%x", k.Key), nil
 }
 
-// fromMnemonic builds an HD wallet (account index 0) from a seed phrase.
-func fromMnemonic(name, mnemonic string) (*Wallet, error) {
-	priv, err := deriveKey(mnemonic, 0)
+// fromMnemonic builds an HD wallet at the given account index from a seed phrase.
+func fromMnemonic(name, mnemonic string, account uint32) (*Wallet, error) {
+	priv, err := deriveKey(mnemonic, account)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +71,7 @@ func fromMnemonic(name, mnemonic string) (*Wallet, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &Wallet{Name: name, Address: addr, Mnemonic: mnemonic, privHex: priv}, nil
+	return &Wallet{Name: name, Address: addr, Mnemonic: mnemonic, Account: account, privHex: priv}, nil
 }
 
 // fromHex builds a wallet from a raw private key (legacy keyfiles).
@@ -140,32 +142,64 @@ func (s *Store) Import(name, mnemonic string) (*Wallet, error) {
 }
 
 func (s *Store) save(name, mnemonic string) (*Wallet, error) {
-	w, err := fromMnemonic(name, mnemonic)
+	w, err := fromMnemonic(name, mnemonic, 0)
 	if err != nil {
 		return nil, err
 	}
 	if err := os.WriteFile(s.path(name), []byte(mnemonic+"\n"), 0o600); err != nil {
 		return nil, fmt.Errorf("wallet: save %q: %w", name, err)
 	}
+	// First wallet created becomes the default.
+	if def, _ := s.Default(); def == "" {
+		_ = s.SetDefault(name)
+	}
 	return w, nil
 }
 
-// Load reads a wallet by name. HD wallets store a mnemonic; legacy wallets store
-// a raw hex key — both load.
-func (s *Store) Load(name string) (*Wallet, error) {
+// Load reads a wallet by name at HD account 0. Legacy raw-hex wallets load too.
+func (s *Store) Load(name string) (*Wallet, error) { return s.LoadAccount(name, 0) }
+
+// LoadAccount reads a wallet by name, deriving HD account `account`
+// (m/44'/60'/0'/0/account). Legacy raw-hex wallets ignore account.
+func (s *Store) LoadAccount(name string, account uint32) (*Wallet, error) {
 	data, err := os.ReadFile(s.path(name))
 	if err != nil {
 		return nil, fmt.Errorf("wallet: load %q: %w", name, err)
 	}
 	content := strings.TrimSpace(string(data))
 	if bip39.IsMnemonicValid(content) {
-		return fromMnemonic(name, content)
+		return fromMnemonic(name, content, account)
 	}
 	w, err := fromHex(name, content)
 	if err != nil {
 		return nil, fmt.Errorf("wallet: %q corrupt: %w", name, err)
 	}
 	return w, nil
+}
+
+// --- default wallet ---
+
+func (s *Store) defaultPath() string { return filepath.Join(s.dir, ".default") }
+
+// SetDefault records `name` as the default wallet for commands that don't pass
+// --wallet explicitly.
+func (s *Store) SetDefault(name string) error {
+	if _, err := os.Stat(s.path(name)); err != nil {
+		return fmt.Errorf("wallet: %q not found", name)
+	}
+	return os.WriteFile(s.defaultPath(), []byte(name+"\n"), 0o600)
+}
+
+// Default returns the default wallet name ("" if none is set).
+func (s *Store) Default() (string, error) {
+	data, err := os.ReadFile(s.defaultPath())
+	if os.IsNotExist(err) {
+		return "", nil
+	}
+	if err != nil {
+		return "", err
+	}
+	return strings.TrimSpace(string(data)), nil
 }
 
 // List returns the names of stored wallets.
