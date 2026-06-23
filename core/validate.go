@@ -43,6 +43,18 @@ func (t BetTerms) ValidateOpen() error {
 	return errors.Join(errs...)
 }
 
+// ValidateEither accepts a bet that is valid as a bilateral bet OR, when exactly
+// one side is unset (the open side), as an open bet. Useful for ingesting terms
+// from chain, where an open bet's creation-time terms carry a zero open side.
+func (t BetTerms) ValidateEither() error {
+	openYes := t.YesAgent == zeroAddress
+	openNo := t.NoAgent == zeroAddress
+	if openYes != openNo {
+		return t.ValidateOpen()
+	}
+	return t.Validate()
+}
+
 // validateBase covers everything except agent presence/distinctness (shared by
 // Validate and ValidateOpen).
 func (t BetTerms) validateBase() []error {
