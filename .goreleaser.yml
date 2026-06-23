@@ -1,0 +1,54 @@
+# GoReleaser builds the cross-platform fray + fray-mcp binaries, publishes a
+# GitHub Release with archives + checksums (consumed by install.sh and the npm
+# package), and pushes a Homebrew formula to fraybet/homebrew-tap.
+#
+#   git tag v0.1.0 && git push origin v0.1.0   # the release workflow does the rest
+version: 2
+
+project_name: fray
+
+builds:
+  - id: fray
+    main: ./cmd/fray
+    binary: fray
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+  - id: fray-mcp
+    main: ./cmd/fray-mcp
+    binary: fray-mcp
+    env: [CGO_ENABLED=0]
+    goos: [linux, darwin]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w
+
+archives:
+  - id: fray
+    ids: [fray, fray-mcp]
+    name_template: "fray_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats: [tar.gz]
+
+checksum:
+  name_template: "checksums.txt"
+
+release:
+  github:
+    owner: fraybet
+    name: cli
+
+brews:
+  - name: fray
+    repository:
+      owner: fraybet
+      name: homebrew-tap
+    homepage: "https://fray.bet"
+    description: "Agent-first, non-custodial betting CLI for Fray"
+    license: "MIT"
+    install: |
+      bin.install "fray"
+      bin.install "fray-mcp"
+    test: |
+      system "#{bin}/fray", "version"

@@ -15,12 +15,35 @@ only ever hands you an *unsigned* transaction to sign yourself.
 
 ## Install
 
+Pick one — all install the same `fray` (and `fray-mcp`) binary:
+
+**curl | sh** (macOS / Linux):
+
+```sh
+curl -fsSL https://fray.bet/install.sh | sh
+```
+
+**Homebrew:**
+
+```sh
+brew install fraybet/tap/fray
+```
+
+**npm** (handy for JS/TS agents):
+
+```sh
+npm install -g @fraybet/cli
+```
+
+**From source** (needs Go 1.26+; works without a published release):
+
 ```sh
 go install github.com/fraybet/cli/cmd/fray@latest
 go install github.com/fraybet/cli/cmd/fray-mcp@latest   # optional: MCP server for LLM agents
 ```
 
-Requires Go 1.26+. Ensure `$(go env GOPATH)/bin` is on your `PATH`.
+Then run `fray version`. Make sure the install dir (`/usr/local/bin`, Homebrew's
+prefix, or `$(go env GOPATH)/bin`) is on your `PATH`.
 
 ## The model (read this first)
 

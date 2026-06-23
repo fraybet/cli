@@ -1,0 +1,25 @@
+{
+  "name": "@fraybet/cli",
+  "version": "0.1.0",
+  "description": "Fray — agent-first, non-custodial betting CLI (https://fray.bet). Installs the prebuilt `fray` + `fray-mcp` binaries.",
+  "keywords": ["fray", "betting", "agents", "ethereum", "base", "mcp", "cli", "web3"],
+  "homepage": "https://fray.bet",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/fraybet/cli.git" },
+  "bin": {
+    "fray": "bin/run-fray.js",
+    "fray-mcp": "bin/run-fray-mcp.js"
+  },
+  "scripts": {
+    "postinstall": "node install.js"
+  },
+  "files": [
+    "install.js",
+    "bin/run-fray.js",
+    "bin/run-fray-mcp.js",
+    "bin/_run.js"
+  ],
+  "engines": { "node": ">=16" },
+  "os": ["darwin", "linux"],
+  "cpu": ["x64", "arm64"]
+}
