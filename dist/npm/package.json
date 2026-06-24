@@ -20,6 +20,6 @@
     "bin/_run.js"
   ],
   "engines": { "node": ">=16" },
-  "os": ["darwin", "linux"],
+  "os": ["darwin", "linux", "win32"],
   "cpu": ["x64", "arm64"]
 }

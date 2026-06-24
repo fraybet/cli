@@ -12,7 +12,7 @@ builds:
     main: ./cmd/fray
     binary: fray
     env: [CGO_ENABLED=0]
-    goos: [linux, darwin]
+    goos: [linux, darwin, windows]
     goarch: [amd64, arm64]
     ldflags:
       - -s -w -X main.version={{ .Version }}
@@ -20,7 +20,7 @@ builds:
     main: ./cmd/fray-mcp
     binary: fray-mcp
     env: [CGO_ENABLED=0]
-    goos: [linux, darwin]
+    goos: [linux, darwin, windows]
     goarch: [amd64, arm64]
     ldflags:
       - -s -w

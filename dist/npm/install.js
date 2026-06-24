@@ -9,10 +9,12 @@ const REPO = "fraybet/cli";
 const pkg = require("./package.json");
 const version = "v" + pkg.version;
 
-const osMap = { darwin: "darwin", linux: "linux" };
+const osMap = { darwin: "darwin", linux: "linux", win32: "windows" };
 const archMap = { x64: "amd64", arm64: "arm64" };
 const os = osMap[process.platform];
 const arch = archMap[process.arch];
+const exe = os === "windows" ? ".exe" : "";
+const bins = ["fray" + exe, "fray-mcp" + exe];
 
 const binDir = path.join(__dirname, "bin");
 
@@ -28,11 +30,12 @@ const url = `https://github.com/${REPO}/releases/download/${version}/fray_${pkg.
 
 try {
   fs.mkdirSync(binDir, { recursive: true });
-  // curl + tar are present on macOS/Linux; extract just the binaries into bin/.
-  execSync(`curl -fsSL "${url}" | tar -xz -C "${binDir}" fray fray-mcp`, {
+  // curl + tar ship with macOS, Linux, and Windows 10+ (1803+). The windows
+  // archive holds fray.exe/fray-mcp.exe, so extract by the platform-correct name.
+  execSync(`curl -fsSL "${url}" | tar -xz -C "${binDir}" ${bins.join(" ")}`, {
     stdio: "inherit",
   });
-  for (const b of ["fray", "fray-mcp"]) {
+  for (const b of bins) {
     const p = path.join(binDir, b);
     if (fs.existsSync(p)) fs.chmodSync(p, 0o755);
   }
