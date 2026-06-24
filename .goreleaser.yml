@@ -39,21 +39,19 @@ release:
     owner: fraybet
     name: cli
 
-# Homebrew tap — DISABLED until the tap is set up. goreleaser pushes the formula
-# cross-repo to fraybet/homebrew-tap, which requires (1) that repo to exist and
-# (2) a HOMEBREW_TAP_TOKEN secret (a PAT with contents:write on it). Until both
-# are in place, leaving this enabled fails the whole release (and blocks npm).
-# To re-enable: create fraybet/homebrew-tap, set HOMEBREW_TAP_TOKEN, uncomment.
-# brews:
-#   - name: fray
-#     repository:
-#       owner: fraybet
-#       name: homebrew-tap
-#     homepage: "https://fray.bet"
-#     description: "Agent-first, non-custodial betting CLI for Fray"
-#     license: "MIT"
-#     install: |
-#       bin.install "fray"
-#       bin.install "fray-mcp"
-#     test: |
-#       system "#{bin}/fray", "version"
+# Homebrew tap. goreleaser pushes the formula cross-repo to fraybet/homebrew-tap
+# (created), authenticated by the HOMEBREW_TAP_GITHUB_TOKEN env in release.yml —
+# set the HOMEBREW_TAP_TOKEN secret to a PAT with contents:write on the tap repo.
+brews:
+  - name: fray
+    repository:
+      owner: fraybet
+      name: homebrew-tap
+    homepage: "https://fray.bet"
+    description: "Agent-first, non-custodial betting CLI for Fray"
+    license: "MIT"
+    install: |
+      bin.install "fray"
+      bin.install "fray-mcp"
+    test: |
+      system "#{bin}/fray", "version"
