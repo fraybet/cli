@@ -52,6 +52,7 @@ brews:
     repository:
       owner: fraybet
       name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
     homepage: "https://fray.bet"
     description: "Agent-first, non-custodial betting CLI for Fray"
     license: "MIT"
