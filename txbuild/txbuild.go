@@ -155,6 +155,14 @@ func AgreeOutcome(from, escrow core.Address, outcome bets.Outcome) (chain.Unsign
 	return packEscrow(from, escrow, "agreeOutcome", uint8(outcome))
 }
 
+// Resolve builds the unsigned tx for the ARBITER to resolve a contested bet.
+// evidenceURI links the published deliberation (the Claude/OpenAI/Gemini
+// transcript PDF) and evidenceHash commits to its bytes. Must be sent from the
+// bet's arbiter address.
+func Resolve(from, escrow core.Address, outcome bets.Outcome, evidenceHash core.Hash32, evidenceURI string) (chain.UnsignedTx, error) {
+	return packEscrow(from, escrow, "resolve", uint8(outcome), [32]byte(evidenceHash), evidenceURI)
+}
+
 // Challenge builds the unsigned tx to challenge a claim.
 func Challenge(from, escrow core.Address) (chain.UnsignedTx, error) {
 	return packEscrow(from, escrow, "challenge")

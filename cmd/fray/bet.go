@@ -28,6 +28,7 @@ commands:
   claim       build the unsigned tx to claim YES/NO
   agree       co-sign an outcome (fast-settle; both sides agree -> instant payout)
   challenge   build the unsigned tx to challenge a claim
+  resolve     arbiter: resolve a contested bet (YES/NO/VOID + evidence URI)
   finalize    build the unsigned tx to finalize an unchallenged claim
   void        build the unsigned tx to refund an unclaimed, expired bet
 
@@ -65,6 +66,8 @@ func runBet(args []string, out io.Writer) error {
 		return betClaim(rest, out)
 	case "agree":
 		return betAgree(rest, out)
+	case "resolve":
+		return betResolve(rest, out)
 	case "help", "-h", "--help":
 		fmt.Fprint(out, betUsage)
 		return nil
@@ -357,6 +360,42 @@ func betSimpleAction(action string, args []string, out io.Writer) error {
 			return txbuild.Revoke(from, escrowA)
 		}
 		return chain.UnsignedTx{}, fmt.Errorf("unknown action %q", action)
+	})
+}
+
+// betResolve is the arbiter's resolution of a contested bet. Unlike claim/agree
+// it accepts VOID, takes an evidence URI (the published deliberation) committed
+// by evidence-hash, and must be signed by the bet's arbiter address.
+func betResolve(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("resolve", flag.ContinueOnError)
+	fs.SetOutput(out)
+	escrow := fs.String("escrow", "", "BetEscrow address")
+	outcome := fs.String("outcome", "", "YES, NO, or VOID")
+	evidenceURI := fs.String("evidence-uri", "", "link to the published deliberation (the transcript PDF)")
+	evidence := fs.String("evidence-hash", "", "evidence hash (bytes32; sha256 of the evidence)")
+	sf := addSignerFlags(fs)
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	escrowA, err := parseAddr(*escrow, "escrow")
+	if err != nil {
+		return err
+	}
+	o, err := parseArbiterOutcome(*outcome)
+	if err != nil {
+		return err
+	}
+	// evidence-hash defaults to the zero hash when omitted (e.g. a VOID with no
+	// published transcript); otherwise it must be a valid bytes32.
+	ev := core.Hash32{}
+	if h := strings.TrimSpace(*evidence); h != "" {
+		ev, err = core.HexToHash32(h)
+		if err != nil {
+			return err
+		}
+	}
+	return sf.run(out, "resolve "+o.String(), "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.Resolve(from, escrowA, o, ev, *evidenceURI)
 	})
 }
 

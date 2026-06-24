@@ -49,6 +49,15 @@ func parseOutcome(s string) (bets.Outcome, error) {
 	}
 }
 
+// parseArbiterOutcome also accepts VOID — the arbiter may void a contested bet
+// (refund both sides) when neither YES nor NO can be established.
+func parseArbiterOutcome(s string) (bets.Outcome, error) {
+	if strings.EqualFold(strings.TrimSpace(s), "VOID") {
+		return bets.OutcomeVoid, nil
+	}
+	return parseOutcome(s)
+}
+
 // parseSideYN returns true for YES, false for NO.
 func parseSideYN(s string) (bool, error) {
 	switch strings.ToUpper(strings.TrimSpace(s)) {
