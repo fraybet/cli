@@ -7,6 +7,11 @@ version: 2
 
 project_name: fray
 
+# Output to a separate dir: the repo's committed dist/ holds the install script +
+# npm package (source), and `release --clean` would otherwise wipe them and fail
+# with "git is in a dirty state".
+dist: .goreleaser-out
+
 builds:
   - id: fray
     main: ./cmd/fray
