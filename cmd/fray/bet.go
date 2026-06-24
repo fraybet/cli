@@ -26,6 +26,7 @@ commands:
   accept      take the open side of an OPEN bet (escrows your stake -> Live)
   revoke      cancel your un-accepted OPEN bet and reclaim your stake
   claim       build the unsigned tx to claim YES/NO
+  agree       co-sign an outcome (fast-settle; both sides agree -> instant payout)
   challenge   build the unsigned tx to challenge a claim
   finalize    build the unsigned tx to finalize an unchallenged claim
   void        build the unsigned tx to refund an unclaimed, expired bet
@@ -62,6 +63,8 @@ func runBet(args []string, out io.Writer) error {
 		return betSimpleAction(cmd, rest, out)
 	case "claim":
 		return betClaim(rest, out)
+	case "agree":
+		return betAgree(rest, out)
 	case "help", "-h", "--help":
 		fmt.Fprint(out, betUsage)
 		return nil
@@ -354,6 +357,31 @@ func betSimpleAction(action string, args []string, out io.Writer) error {
 			return txbuild.Revoke(from, escrowA)
 		}
 		return chain.UnsignedTx{}, fmt.Errorf("unknown action %q", action)
+	})
+}
+
+// betAgree co-signs an outcome (the fast-settle path). When both participants
+// agree on the same outcome the bet pays out immediately, with no challenge
+// window and no arbiter fees. Honest losers use this to settle cleanly.
+func betAgree(args []string, out io.Writer) error {
+	fs := flag.NewFlagSet("agree", flag.ContinueOnError)
+	fs.SetOutput(out)
+	escrow := fs.String("escrow", "", "BetEscrow address")
+	outcome := fs.String("outcome", "", "YES or NO")
+	sf := addSignerFlags(fs)
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	escrowA, err := parseAddr(*escrow, "escrow")
+	if err != nil {
+		return err
+	}
+	o, err := parseOutcome(*outcome)
+	if err != nil {
+		return err
+	}
+	return sf.run(out, "agree "+o.String(), "", func(from core.Address) (chain.UnsignedTx, error) {
+		return txbuild.AgreeOutcome(from, escrowA, o)
 	})
 }
 

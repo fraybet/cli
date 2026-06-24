@@ -148,6 +148,13 @@ func Claim(from, escrow core.Address, outcome bets.Outcome, evidence core.Hash32
 	return packEscrow(from, escrow, "claim", uint8(outcome), [32]byte(evidence))
 }
 
+// AgreeOutcome builds the unsigned tx for a participant to co-sign an outcome
+// (the fast-settle path). When both sides agree on the same outcome the bet pays
+// out immediately, skipping the challenge window.
+func AgreeOutcome(from, escrow core.Address, outcome bets.Outcome) (chain.UnsignedTx, error) {
+	return packEscrow(from, escrow, "agreeOutcome", uint8(outcome))
+}
+
 // Challenge builds the unsigned tx to challenge a claim.
 func Challenge(from, escrow core.Address) (chain.UnsignedTx, error) {
 	return packEscrow(from, escrow, "challenge")
