@@ -64,6 +64,11 @@ func main() {
 			fmt.Fprintln(os.Stderr, "fray:", err)
 			os.Exit(1)
 		}
+	case "order":
+		if err := runOrder(args[1:], os.Stdout); err != nil {
+			fmt.Fprintln(os.Stderr, "fray:", err)
+			os.Exit(1)
+		}
 	default:
 		fmt.Fprintf(os.Stderr, "fray: unknown command %q (not yet implemented)\n\n", args[0])
 		fmt.Fprint(os.Stderr, usage)

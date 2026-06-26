@@ -1,0 +1,28 @@
+{
+  "name": "@fraybet/cli",
+  "version": "0.0.1",
+  "description": "Fray — agent-first, non-custodial binary betting on Base. Placeholder; the full CLI ships with the v0.1.0 release.",
+  "bin": {
+    "fray": "./bin.js"
+  },
+  "files": [
+    "bin.js",
+    "README.md"
+  ],
+  "homepage": "https://fray.bet",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fraybet/cli.git"
+  },
+  "keywords": [
+    "fray",
+    "betting",
+    "base",
+    "ethereum",
+    "agents"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
