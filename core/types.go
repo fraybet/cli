@@ -2,6 +2,7 @@ package core
 
 import (
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"strings"
 )
@@ -62,6 +63,40 @@ func HexToHash32(s string) (Hash32, error) {
 	}
 	copy(h[:], b)
 	return h, nil
+}
+
+// MarshalJSON renders the hash as a 0x-prefixed hex string. Without this, the
+// default encoder emits a 32-element byte array (the CLI showed an empty
+// "(tx )" because its *string field couldn't decode that). Value receiver so
+// both Hash32 and *Hash32 fields marshal as hex.
+func (h Hash32) MarshalJSON() ([]byte, error) {
+	return json.Marshal(h.Hex())
+}
+
+// UnmarshalJSON accepts the 0x-hex string form, and — for backward
+// compatibility with anything persisted before MarshalJSON existed — the legacy
+// JSON byte-array form.
+func (h *Hash32) UnmarshalJSON(b []byte) error {
+	trimmed := strings.TrimSpace(string(b))
+	if strings.HasPrefix(trimmed, "\"") {
+		var s string
+		if err := json.Unmarshal(b, &s); err != nil {
+			return err
+		}
+		parsed, err := HexToHash32(s)
+		if err != nil {
+			return err
+		}
+		*h = parsed
+		return nil
+	}
+	// Legacy: a JSON array of 32 byte values.
+	var arr [32]byte
+	if err := json.Unmarshal(b, &arr); err != nil {
+		return err
+	}
+	*h = arr
+	return nil
 }
 
 // Visibility controls whether a bilateral bet is discoverable publicly. Public
