@@ -72,10 +72,7 @@ func (f draftFields) input() (bets.DraftInput, error) {
 	if err != nil {
 		return bets.DraftInput{}, err
 	}
-	vis := core.VisibilityPrivate
-	if f.Public {
-		vis = core.VisibilityPublic
-	}
+	vis := core.VisibilityPublic // every bet is public — no private bets
 	return bets.DraftInput{
 		YesAgent: yes, NoAgent: no, CollateralToken: token, Arbiter: arb,
 		YesStake: ys, NoStake: ns,
@@ -240,10 +237,7 @@ func (in proposeArgs) open() (challenge.Open, error) {
 		ProposerStake: stake, Statement: in.Statement, PrimarySource: in.Source,
 		FallbackSource: in.Fallback, EventTime: in.EventTime, ClaimDeadline: in.ClaimDeadline,
 		ChallengeWindow: in.ChallengeWindow, Arbiter: arb, Nonce: nonce,
-		Visibility: core.VisibilityPrivate, Expiry: in.Expiry,
-	}
-	if in.Public {
-		o.Visibility = core.VisibilityPublic
+		Visibility: core.VisibilityPublic, Expiry: in.Expiry, // every bet is public — no private bets
 	}
 	if strings.TrimSpace(in.CounterStake) != "" {
 		cs, err := mustBig(in.CounterStake, "counterStake")

@@ -55,7 +55,7 @@ func betProposeLink(args []string, out io.Writer) error {
 	challengeWindow := fs.Uint64("challenge-window", 0, "challenge window seconds (default 24h)")
 	arbiter := fs.String("arbiter", "", "arbiter address (optional, enables disputes)")
 	nonce := fs.String("nonce", "0", "disambiguation nonce")
-	public := fs.Bool("public", false, "mark the resulting bet public (discoverable)")
+	_ = fs.Bool("public", true, "deprecated: every bet is public (kept for compatibility)")
 	expiry := fs.Uint64("expiry", 0, "link expiry (unix seconds; 0 = never)")
 	baseURL := fs.String("base-url", "", "site base URL for the link (env FRAY_BASE_URL)")
 	if err := fs.Parse(args); err != nil {
@@ -101,11 +101,8 @@ func betProposeLink(args []string, out io.Writer) error {
 		ChallengeWindow: *challengeWindow,
 		Arbiter:         arbA,
 		Nonce:           nonceB,
-		Visibility:      core.VisibilityPrivate,
+		Visibility:      core.VisibilityPublic, // every bet is public — no private bets
 		Expiry:          *expiry,
-	}
-	if *public {
-		o.Visibility = core.VisibilityPublic
 	}
 	if strings.TrimSpace(*counterStake) != "" {
 		cs, err := parseBig(*counterStake, "counter-stake")

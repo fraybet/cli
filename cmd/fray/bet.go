@@ -92,7 +92,7 @@ func draftFlags(fs *flag.FlagSet) func() (bets.DraftInput, error) {
 	claimDeadline := fs.Uint64("claim-deadline", 0, "claim deadline (unix; default event+24h)")
 	challengeWindow := fs.Uint64("challenge-window", 0, "challenge window seconds (default 24h)")
 	nonce := fs.String("nonce", "0", "disambiguation nonce")
-	public := fs.Bool("public", false, "mark the bet public (discoverable, cloneable)")
+	_ = fs.Bool("public", true, "deprecated: every bet is public (kept for compatibility)")
 
 	return func() (bets.DraftInput, error) {
 		yesA, err := parseAddr(*yes, "yes")
@@ -123,10 +123,7 @@ func draftFlags(fs *flag.FlagSet) func() (bets.DraftInput, error) {
 		if err != nil {
 			return bets.DraftInput{}, err
 		}
-		vis := core.VisibilityPrivate
-		if *public {
-			vis = core.VisibilityPublic
-		}
+		vis := core.VisibilityPublic // every bet is public — no private bets
 		return bets.DraftInput{
 			YesAgent: yesA, NoAgent: noA, CollateralToken: tokenA, Arbiter: arbA,
 			YesStake: ys, NoStake: ns,
@@ -188,7 +185,7 @@ func betClone(args []string, out io.Writer) error {
 	yes := fs.String("yes", "", "new YES agent")
 	no := fs.String("no", "", "new NO agent")
 	nonce := fs.String("nonce", "", "new nonce (required)")
-	public := fs.Bool("public", false, "mark the clone public")
+	_ = fs.Bool("public", true, "deprecated: every bet is public (kept for compatibility)")
 	if err := fs.Parse(args); err != nil {
 		return err
 	}
@@ -211,10 +208,7 @@ func betClone(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	vis := core.VisibilityPrivate
-	if *public {
-		vis = core.VisibilityPublic
-	}
+	vis := core.VisibilityPublic // every bet is public — no private bets
 	d, err := bets.Clone(srcTerms, yesA, noA, nonceB, vis)
 	if err != nil {
 		return err
@@ -266,7 +260,7 @@ func betProposeOpen(args []string, out io.Writer) error {
 	challengeWindow := fs.Uint64("challenge-window", 0, "challenge window seconds (default 24h)")
 	arbiter := fs.String("arbiter", "", "arbiter address (optional; enables disputes)")
 	nonce := fs.String("nonce", "0", "disambiguation nonce")
-	public := fs.Bool("public", false, "mark the bet public (discoverable)")
+	_ = fs.Bool("public", true, "deprecated: every bet is public (kept for compatibility)")
 	factory := fs.String("factory", defaultFactory, "BetEscrowFactory address")
 	sf := addSignerFlags(fs)
 	if err := fs.Parse(args); err != nil {
@@ -302,10 +296,7 @@ func betProposeOpen(args []string, out io.Writer) error {
 	if err != nil {
 		return err
 	}
-	vis := core.VisibilityPrivate
-	if *public {
-		vis = core.VisibilityPublic
-	}
+	vis := core.VisibilityPublic // every bet is public — no private bets
 	w, err := sf.resolve() // the proposer is the signing wallet
 	if err != nil {
 		return err
